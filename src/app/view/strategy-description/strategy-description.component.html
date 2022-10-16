@@ -1,0 +1,16 @@
+<div>
+  <h1>{{strategy.name}}</h1>
+  <button (click)="pick()">Pick</button>
+</div>
+
+<strategy-brief [strategy]="strategy"></strategy-brief>
+
+<mat-tab-group>
+  <mat-tab label="Month"> Month Graph </mat-tab>
+  <mat-tab label="Year"> Year Graph </mat-tab>
+  <mat-tab label="Entire Period"> All Graph </mat-tab>
+</mat-tab-group>
+
+
+<h2>Description</h2>
+<p>{{strategy.description}}</p>
