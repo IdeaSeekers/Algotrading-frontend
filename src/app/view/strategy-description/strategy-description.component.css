@@ -1,9 +1,16 @@
 h1 {
   color: var(--title-color);
-  font-weight: bold;
+  font-size: 36px;
+  padding-left: 24px;
+  padding-top: 24px;
 }
 
-button {
+strategy-brief {
+  position: relative;
+  left: 24px;
+}
+
+#pick_button {
   background-color: var(--primary-color);
   border: none;
   border-radius: 10px;
@@ -12,4 +19,8 @@ button {
   color: white;
   font-size: 16px;
   font-weight: lighter;
+
+  position: absolute;
+  top: 39px;
+  right: 48px;
 }
