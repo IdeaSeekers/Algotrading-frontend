@@ -26,6 +26,10 @@ button.pick_button {
   font-size: 16px;
 }
 
+button.pick_button:active {
+  padding-top: 3px;
+}
+
 div.pick_button {
   padding: inherit;
   position: absolute;
