@@ -9,3 +9,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+button.primary {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  font-weight: lighter;
+}

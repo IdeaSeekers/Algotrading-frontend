@@ -1,6 +1,10 @@
-<div>
+<div class="strategy-description-container">
   <h1>{{strategy.name}}</h1>
-  <button id="pick_button" (click)="pick()">Pick</button>
+
+  <div class="pick_button">
+    <button class="primary pick_button" (click)="pick()">Pick</button>
+  </div>
+
   <strategy-brief [strategy]="strategy"></strategy-brief>
 
   <mat-tab-group>
