@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from "@angular/core";
 import {Strategy} from "../../model/strategy.model";
 import {Title} from "@angular/platform-browser";
 import {StrategyRisk} from "../../model/strategy-risk.model";
@@ -8,11 +8,18 @@ import {StrategyRisk} from "../../model/strategy-risk.model";
   templateUrl: './strategy-description.component.html',
   styleUrls: ['strategy-description.component.css']
 })
-export class StrategyDescriptionComponent {
+export class StrategyDescriptionComponent implements AfterViewInit {
 
   @Input() strategy: Strategy = new Strategy();
 
-  constructor(private titleService: Title) {
+  isInitialised: boolean = false
+
+  ngAfterViewInit() {
+    this.isInitialised = true
+    this.cdr.detectChanges()
+  }
+
+  constructor(private titleService: Title, private cdr: ChangeDetectorRef) {
     this.strategy.name = "Strategy Name";
     this.strategy.risk = StrategyRisk.Low;
     this.strategy.activeBots = 512;

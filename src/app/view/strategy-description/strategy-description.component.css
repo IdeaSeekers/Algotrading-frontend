@@ -47,11 +47,6 @@ mat-button-toggle-group {
   color: var(--primary-color);
 }
 
-/*/deep/.mat-button-toggle-label-content {*/
-/*  line-height: normal !important;*/
-/*  padding-block: 8px !important;*/
-/*}*/
-
 .mat-button-toggle-checked {
   color: white;
   background-color: var(--primary-color);
@@ -59,4 +54,15 @@ mat-button-toggle-group {
 
 h2 {
   padding-top: 36px;
+}
+
+#strategy-description-field {
+  padding-bottom: 20%;
+}
+
+return-chart {
+  position: relative;
+  top: 36px;
+  left: -36px;
+  width: 100%;
 }

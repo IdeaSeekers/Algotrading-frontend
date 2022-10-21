@@ -8,11 +8,20 @@
   <strategy-brief [strategy]="strategy"></strategy-brief>
 
   <mat-button-toggle-group value="entire" appearance="legacy">
-    <mat-button-toggle id="month-toggle" value="month"> Month </mat-button-toggle>
-    <mat-button-toggle id="year-toggle" value="year"> Year </mat-button-toggle>
-    <mat-button-toggle id="entire-toggle" value="entire"> Entire Period </mat-button-toggle>
+    <mat-button-toggle #month_toggle value="month"> Month </mat-button-toggle>
+    <mat-button-toggle #year_toggle value="year"> Year </mat-button-toggle>
+    <mat-button-toggle #entire_toggle value="entire"> Entire Period </mat-button-toggle>
   </mat-button-toggle-group>
 
+  <ng-container *ngIf="isInitialised">
+    <return-chart
+      [dataName]="strategy.name"
+      [monthButton]="month_toggle._buttonElement"
+      [yearButton]="year_toggle._buttonElement"
+      [allButton]="entire_toggle._buttonElement"
+    ></return-chart>
+  </ng-container>
+
   <h2>Description</h2>
-  <p>{{strategy.description}}</p>
+  <p id="strategy-description-field">{{strategy.description}}</p>
 </div>
