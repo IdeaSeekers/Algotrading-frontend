@@ -37,6 +37,26 @@ div.pick_button {
   right: 12px;
 }
 
+mat-button-toggle-group {
+  position: relative;
+  top: 12px;
+  border-radius: 8px;
+}
+
+.mat-button-toggle {
+  color: var(--primary-color);
+}
+
+/*/deep/.mat-button-toggle-label-content {*/
+/*  line-height: normal !important;*/
+/*  padding-block: 8px !important;*/
+/*}*/
+
+.mat-button-toggle-checked {
+  color: white;
+  background-color: var(--primary-color);
+}
+
 h2 {
-  padding-top: 24px;
+  padding-top: 36px;
 }
