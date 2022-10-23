@@ -1,0 +1,30 @@
+<div class="form_root">
+  <div class="form_window" xmlns="http://www.w3.org/1999/html"></div>
+  <div class="form_box">
+    <div class="form_header">
+      <h1>{{strategy.name}}</h1>
+      <button #close_button>&times;</button>
+    </div>
+    <div class="form_content">
+      <form class="form-inline" autocomplete="off">
+        <div class="form-group">
+          <label for="bot_name" class="text_primary">Bot Name: </label>
+          <input type="text" id="bot_name" name="bot_name" size="30">
+        </div>
+        <div class="form-group">
+          <label for="amount" class="text_primary">Input Amount: </label>
+          <input type="number" min="0.0001" max="1000000000" id="amount" name="amount" class="input_number">
+          <span class="text_primary"> $</span>
+          <span class="text_secondary">&emsp;({{user.balance}}$ available)</span>
+        </div>
+        <div class="form-group">
+          <input type="checkbox" id="terms_cb" name="terms_cb" class="custom-checkbox">
+          <label for="terms_cb"><span class="text_primary"> I have read and accept the terms and conditions</span></label>
+        </div>
+      </form>
+    </div>
+    <div class="form_footer">
+      <button class="primary start_bot_button">Start Bot</button>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,8 @@
   --positive-color: #35D073;
   --neutral-color: #F39629;
   --negative-color: #BC0022;
+  --box-bg-color: #E5F0FF;
+  --darken-bg-color: #4A586E;
 }
 
 html, body { height: 100%; }

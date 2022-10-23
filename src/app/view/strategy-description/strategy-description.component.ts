@@ -1,7 +1,8 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Input, ViewChild} from "@angular/core";
 import {Strategy} from "../../model/strategy.model";
 import {Title} from "@angular/platform-browser";
 import {StrategyRisk} from "../../model/strategy-risk.model";
+import {BotCreationFormComponent} from "../bot-creation-form/bot-creation-form.component";
 
 @Component({
   selector: 'strategy-description',
@@ -12,6 +13,13 @@ export class StrategyDescriptionComponent implements AfterViewInit {
 
   @Input() strategy: Strategy = new Strategy();
 
+  @ViewChild('creationForm', { static: false }) set creationForm(value: BotCreationFormComponent | undefined) {
+    if (value) {
+      this.onCreationFormOpen(value)
+    }
+  }
+
+  showForm: boolean = false
   isInitialised: boolean = false
 
   ngAfterViewInit() {
@@ -31,7 +39,18 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
     this.titleService.setTitle(this.strategy.name);
   }
 
-  pick() {
+  onCreationFormOpen(creationForm: BotCreationFormComponent) {
+    if (creationForm.closeButton) {
+      creationForm.closeButton.nativeElement.onclick = this.closeForm.bind(this)
+    }
 
+  }
+
+  closeForm() {
+    this.showForm = false
+  }
+
+  pick() {
+    this.showForm = true
   }
 }
