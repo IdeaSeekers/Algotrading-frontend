@@ -15,4 +15,14 @@ button.primary {
   border: none;
   color: white;
   font-weight: lighter;
+  transition-duration: 0.2s;
+}
+
+button.primary:hover {
+  background-color: #5db4ff;
+}
+
+button.primary:active {
+  transition-duration: 0.1s;
+  background-color: #002D6D;
 }

@@ -26,6 +26,10 @@ button.pick_button {
   font-size: 16px;
 }
 
+button.pick_button:active {
+  padding-top: 3px;
+}
+
 div.pick_button {
   padding: inherit;
   position: absolute;
@@ -33,6 +37,32 @@ div.pick_button {
   right: 12px;
 }
 
+mat-button-toggle-group {
+  position: relative;
+  top: 12px;
+  border-radius: 8px;
+}
+
+.mat-button-toggle {
+  color: var(--primary-color);
+}
+
+.mat-button-toggle-checked {
+  color: white;
+  background-color: var(--primary-color);
+}
+
 h2 {
-  padding-top: 24px;
+  padding-top: 36px;
+}
+
+#strategy-description-field {
+  padding-bottom: 20%;
+}
+
+return-chart {
+  position: relative;
+  top: 36px;
+  left: -36px;
+  width: 100%;
 }
