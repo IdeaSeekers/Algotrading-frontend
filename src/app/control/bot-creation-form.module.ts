@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from "@angular/platform-browser";
 import {BotCreationFormComponent} from "../view/bot-creation-form/bot-creation-form.component";
+import {CommonModule} from "@angular/common";
 
 
 @NgModule({
@@ -8,9 +8,9 @@ import {BotCreationFormComponent} from "../view/bot-creation-form/bot-creation-f
     BotCreationFormComponent
   ],
   imports: [
-    BrowserModule
+    CommonModule
   ],
-  bootstrap: [
+  exports: [
     BotCreationFormComponent
   ]
 })

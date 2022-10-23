@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ReturnChartModule} from './return-chart.module';
 import {StrategyBriefModule} from './strategy-brief.module';
+import {BotCreationFormModule} from "./bot-creation-form.module";
 
 
 @NgModule({
@@ -13,7 +14,13 @@ import {StrategyBriefModule} from './strategy-brief.module';
     StrategyDescriptionComponent
   ],
   imports: [
-    BrowserModule, MatTabsModule, BrowserAnimationsModule, MatButtonToggleModule, ReturnChartModule, StrategyBriefModule
+    BrowserModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
+    MatButtonToggleModule,
+    ReturnChartModule,
+    StrategyBriefModule,
+    BotCreationFormModule
   ],
   bootstrap: [
     StrategyDescriptionComponent

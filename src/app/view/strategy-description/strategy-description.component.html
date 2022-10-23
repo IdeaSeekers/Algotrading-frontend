@@ -25,3 +25,5 @@
   <h2>Description</h2>
   <p id="strategy-description-field">{{strategy.description}}</p>
 </div>
+
+<bot-creation-form #creationForm *ngIf="showForm" [strategy]="strategy"></bot-creation-form>
