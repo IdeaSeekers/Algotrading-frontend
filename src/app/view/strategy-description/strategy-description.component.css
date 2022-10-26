@@ -15,8 +15,7 @@ h1 {
 }
 
 strategy-brief {
-  position: relative;
-  left: 12px;
+  width: 60%;
 }
 
 button.pick_button {

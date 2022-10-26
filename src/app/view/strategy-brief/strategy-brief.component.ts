@@ -5,9 +5,9 @@ import {Strategy} from "../../model/strategy.model";
   selector: 'strategy-brief',
   template: `
     <div>
-      <p>Risk: <span class="{{strategy?.risk}}">{{strategy?.risk}}</span></p>
-      <p>Average Return: {{strategy?.averageReturn | number:'1.0-2' | percent}}</p>
-      <p>Active Bots: {{strategy?.activeBots}}</p>
+      <p class="left">Risk: <span class="{{strategy.risk}}">{{strategy.risk}}</span></p>
+      <p class="middle">Average Return: {{strategy.averageReturn | number:'1.0-2' | percent}}</p>
+      <p class="right">Active Bots: {{strategy.activeBots}}</p>
     </div>
   `,
   styles: [`
@@ -15,18 +15,29 @@ import {Strategy} from "../../model/strategy.model";
     .Medium { color: var(--neutral-color); }
     .High { color: var(--negative-color); }
     p {
-      display: inline;
-      padding-inline-start: 12px;
-      padding-inline-end: 10%;
       font-style: italic;
     }
     div {
-      padding-block: 12px;
+      width: inherit;
+      padding: inherit;
+      margin: inherit;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .left {
+      text-align: left;
+    }
+    .middle {
+      text-align: center;
+    }
+    .right {
+      text-align: right;
     }
   `]
 })
 export class StrategyBriefComponent {
 
-  @Input() strategy: Strategy | undefined;
+  @Input() strategy!: Strategy;
 
 }
