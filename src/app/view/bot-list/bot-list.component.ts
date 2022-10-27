@@ -1,6 +1,5 @@
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {Bot} from "../../model/bot.model";
-import {BackendService} from "../../control/backend.service";
 
 @Component({
   selector: 'bot-list',
@@ -9,19 +8,20 @@ import {BackendService} from "../../control/backend.service";
 })
 export class BotListComponent {
 
-  bots: Array<Bot> = []
+  @Input() bots: Array<Bot>
 
-  constructor(private backend: BackendService) {
-    backend.getListBots().subscribe(bots => {
-      for (const botInfo of bots) {
-        let bot = new Bot()
-        bot.name = botInfo["name"]
-        bot.inputAmount = botInfo["inputAmount"]
-        bot.currentBalance = Math.random() * 1000
-        bot.absoluteIncome = bot.currentBalance - bot.inputAmount
-        bot.relativeIncome = bot.absoluteIncome / bot.inputAmount
-        this.bots.push(bot)
-      }
-    })
+  constructor() {
+    this.bots = []
+    for (let i = 0; i < 8; i++) {
+      let bot = new Bot()
+
+      bot.name = "Bot Name " + (i + 1).toString()
+      bot.inputAmount = Math.random() * 1000
+      bot.currentBalance = Math.random() * 1000
+      bot.absoluteIncome = bot.currentBalance - bot.inputAmount
+      bot.relativeIncome = bot.absoluteIncome / bot.inputAmount
+
+      this.bots.push(bot)
+    }
   }
 }
