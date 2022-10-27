@@ -39,6 +39,32 @@ button.primary:active {
   padding-top: 3px;
 }
 
+button.secondary {
+  background-color: var(--secondary-color);
+  border: none;
+  color: white;
+  font-weight: lighter;
+  transition-duration: 0.2s;
+
+  /*default sizes*/
+  border-radius: 10px;
+  height: 34px;
+  width: 102px;
+  font-size: 16px;
+}
+
+button.secondary:hover {
+  background-color: #5db4ff;
+}
+
+button.secondary:active {
+  transition-duration: 0.1s;
+  background-color: var(--active-color);
+
+  /*default padding effect*/
+  padding-top: 3px;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

@@ -1,0 +1,53 @@
+div.root {
+  border-radius: 16px;
+  border-style: hidden;
+
+  background-color: var(--box-bg-color);
+  box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
+
+  position: relative;
+  left: 0;
+  top: 0;
+
+  overflow: hidden;
+}
+
+div.header {
+  padding-block: 12px;
+  padding-inline: 24px;
+
+  pointer-events: auto;
+}
+
+div.header > h1:hover {
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+div.header > h1:active {
+  color: var(--active-color);
+}
+
+div.footer {
+  float: right;
+  margin-bottom: 12px;
+  margin-right: 12px;
+  display: flex;
+}
+
+div.footer > button {
+  margin-left: 12px;
+}
+
+h1 {
+  color: var(--title-color);
+}
+
+strategy-brief {
+  margin-top: 12px;
+  margin-inline: auto;
+}
+
+return-chart {
+  height: 120px;
+}
