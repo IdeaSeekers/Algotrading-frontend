@@ -18,17 +18,6 @@ strategy-brief {
   width: 60%;
 }
 
-button.pick_button {
-  border-radius: 10px;
-  height: 34px;
-  width: 102px;
-  font-size: 16px;
-}
-
-button.pick_button:active {
-  padding-top: 3px;
-}
-
 div.pick_button {
   padding: inherit;
   position: absolute;
