@@ -1,4 +1,5 @@
 <div>
   <ng-template viewComponentHost></ng-template>
-  <button *ngIf="hasPrevious" (click)="back()">&larr;</button>
+  <button *ngIf="hasPrevious" class="back" (click)="back()">&larr;</button>
+  <button *ngIf="!isBotList" class="primary bot-list" (click)="navigateBotList()">Bot list</button>
 </div>

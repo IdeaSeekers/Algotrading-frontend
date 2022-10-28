@@ -1,0 +1,13 @@
+<div class="bots-container">
+  <ng-template ngFor let-col [ngForOf]="[0, 1, 2]">
+    <div class="column">
+      <ng-template ngFor let-item [ngForOf]="bots" let-i="index">
+        <bot-list-item
+          *ngIf="i % 3 == col"
+          class="item"
+          [bot]="item"
+        ></bot-list-item>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

@@ -3,6 +3,7 @@ import {NavigationEventModel} from "../model/navigation-event.model";
 import {StrategyListComponent} from "../view/strategy-list/strategy-list.component";
 import {Strategy} from "../model/strategy.model";
 import {StrategyDescriptionComponent} from "../view/strategy-description/strategy-description.component";
+import {BotListComponent} from "../view/bot-list/bot-list.component";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,13 @@ export class NavigationService {
       (component: StrategyDescriptionComponent) => {
         component.strategy = strategy
       }
+    ))
+  }
+
+  loadBotsList() {
+    this.navigationEvents.emit(new NavigationEventModel(
+      BotListComponent,
+      undefined
     ))
   }
 
