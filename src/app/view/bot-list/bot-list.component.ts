@@ -9,9 +9,19 @@ import {BackendService} from "../../control/backend.service";
 })
 export class BotListComponent {
 
-  bots: Array<Bot>
+  bots: Array<Bot> = []
 
   constructor(private backend: BackendService) {
-    this.bots = backend.getListBots()
+    backend.getListBots().subscribe(bots => {
+      for (const botInfo of bots) {
+        let bot = new Bot()
+        bot.name = botInfo["name"]
+        bot.inputAmount = botInfo["inputAmount"]
+        bot.currentBalance = Math.random() * 1000
+        bot.absoluteIncome = bot.currentBalance - bot.inputAmount
+        bot.relativeIncome = bot.absoluteIncome / bot.inputAmount
+        this.bots.push(bot)
+      }
+    })
   }
 }
