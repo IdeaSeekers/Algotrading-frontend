@@ -1,4 +1,4 @@
-div > button {
+button.back {
   position: fixed;
   right: 0;
   top: 0;
@@ -11,12 +11,18 @@ div > button {
   color: var(--secondary-color);
 }
 
-div > button:hover {
+button.back:hover {
   color: #72acff;
 }
 
-div > button:active {
+button.back:active {
   color: #819ba9;
+}
+
+button.bot-list {
+  position: fixed;
+  left: 12px;
+  top: 12px;
 }
 
 /* Chrome, Safari, Edge, Opera */

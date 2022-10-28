@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ViewComponentDirective} from "./view-component.directive";
 import {NavigationService} from "../control/navigation.service";
 import {NavigationEventModel} from "../model/navigation-event.model";
+import {BotListComponent} from "./bot-list/bot-list.component";
 
 @Component({
   selector: 'app-root',
@@ -21,12 +22,16 @@ export class AppComponent implements OnInit {
     return this.historyViews.length > 1
   }
 
+  isBotList: boolean = false
+
   back() {
     this.historyViews.pop()
     this.viewComponent(this.historyViews[this.historyViews.length - 1])
   }
 
   private viewComponent(event: NavigationEventModel) {
+    this.isBotList = event.component == BotListComponent
+
     const viewContainerRef = this.viewHost.viewContainerRef
     viewContainerRef.clear()
 
@@ -34,6 +39,10 @@ export class AppComponent implements OnInit {
     if (event.init) {
       event.init(componentRef.instance)
     }
+  }
+
+  navigateBotList() {
+    this.navigation.loadBotsList()
   }
 
   ngOnInit(): void {

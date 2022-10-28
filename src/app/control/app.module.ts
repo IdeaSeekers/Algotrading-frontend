@@ -6,6 +6,7 @@ import {StrategyListModule} from "./strategy-list.module";
 import {StrategyDescriptionModule} from "./strategy-description.module";
 import {ViewComponentDirective} from '../view/view-component.directive';
 import {HttpClientModule} from '@angular/common/http';
+import {BotListModule} from "./bot-list.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     StrategyListModule,
-    StrategyDescriptionModule
+    StrategyDescriptionModule,
+    BotListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
