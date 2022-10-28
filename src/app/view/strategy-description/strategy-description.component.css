@@ -15,19 +15,7 @@ h1 {
 }
 
 strategy-brief {
-  position: relative;
-  left: 12px;
-}
-
-button.pick_button {
-  border-radius: 10px;
-  height: 34px;
-  width: 102px;
-  font-size: 16px;
-}
-
-button.pick_button:active {
-  padding-top: 3px;
+  width: 60%;
 }
 
 div.pick_button {

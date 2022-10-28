@@ -1,6 +1,7 @@
 :root {
   --primary-color: #0D99FF;
   --secondary-color: #B7D4FF;
+  --active-color: #002D6D;
   --title-color: #002D6D;
   --positive-color: #35D073;
   --neutral-color: #F39629;
@@ -18,6 +19,12 @@ button.primary {
   color: white;
   font-weight: lighter;
   transition-duration: 0.2s;
+
+  /*default sizes*/
+  border-radius: 10px;
+  height: 34px;
+  width: 102px;
+  font-size: 16px;
 }
 
 button.primary:hover {
@@ -26,5 +33,16 @@ button.primary:hover {
 
 button.primary:active {
   transition-duration: 0.1s;
-  background-color: #002D6D;
+  background-color: var(--active-color);
+
+  /*default padding effect*/
+  padding-top: 3px;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }

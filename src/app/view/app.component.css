@@ -1,0 +1,27 @@
+div > button {
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translate(-30px, 12px);
+  font-size: 60px;
+  padding: 0 0;
+  line-height: 40px;
+  border: none;
+  background-color: transparent;
+  color: var(--secondary-color);
+}
+
+div > button:hover {
+  color: #72acff;
+}
+
+div > button:active {
+  color: #819ba9;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

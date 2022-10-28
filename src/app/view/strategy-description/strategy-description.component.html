@@ -2,7 +2,7 @@
   <h1>{{strategy.name}}</h1>
 
   <div class="pick_button">
-    <button class="primary pick_button" (click)="pick()">Pick</button>
+    <button class="primary" (click)="pick()">Pick</button>
   </div>
 
   <strategy-brief [strategy]="strategy"></strategy-brief>
@@ -26,4 +26,9 @@
   <p id="strategy-description-field">{{strategy.description}}</p>
 </div>
 
-<bot-creation-form #creationForm *ngIf="showForm" [strategy]="strategy"></bot-creation-form>
+<bot-creation-form
+  #creationForm
+  *ngIf="showForm"
+  [strategy]="strategy"
+  [onSendRequest]="closeForm.bind(this)"
+></bot-creation-form>

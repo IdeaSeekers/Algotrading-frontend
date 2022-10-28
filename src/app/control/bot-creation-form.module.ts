@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BotCreationFormComponent} from "../view/bot-creation-form/bot-creation-form.component";
 import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -8,7 +9,8 @@ import {CommonModule} from "@angular/common";
     BotCreationFormComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
     BotCreationFormComponent

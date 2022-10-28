@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input} from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import {Chart} from 'highcharts/highstock';
 import Accessibility from "highcharts/modules/accessibility";
@@ -20,9 +20,13 @@ Data(Highcharts)
     </div>
   `,
   styles: [`
-    highcharts-chart {
+    #chart-container {
       width: inherit;
       height: inherit;
+    }
+    highcharts-chart {
+      width: 100%;
+      height: 100%;
       display: block;
     }
   `]
@@ -33,6 +37,32 @@ export class ReturnChartComponent {
       this.chartOptions.series[0].name = value;
     }
   };
+
+  @Input() set borderRadius(value: number) {
+    this.chartOptions.chart!.borderRadius = value
+  }
+
+  @Input() set minimize(value: boolean) {
+    if (value) {
+      this.chartOptions.chart!.spacingLeft = 0
+      this.chartOptions.chart!.spacingRight = 0
+      this.chartOptions.xAxis = {
+        visible: false,
+        crosshair: false
+      }
+      this.chartOptions.yAxis = {
+        visible: false
+      }
+      this.chartOptions.tooltip = {
+        enabled: false
+      }
+      this.chartOptions.plotOptions!.area!.states = {
+        hover: {
+          enabled: false
+        }
+      }
+    }
+  }
 
   @Input() set monthButton(value: ElementRef<HTMLButtonElement>) {
     value.nativeElement.onclick = this.setMonthView.bind(this)
@@ -45,8 +75,6 @@ export class ReturnChartComponent {
   @Input() set allButton(value: ElementRef<HTMLButtonElement>) {
     value.nativeElement.onclick = this.setAllView.bind(this)
   }
-
-  @ViewChild('chart-container') chartContainer: ElementRef<HTMLDivElement> | undefined
 
   Highcharts: typeof Highcharts = Highcharts;
 
@@ -101,6 +129,11 @@ export class ReturnChartComponent {
   }
 
   chartOptions: Highcharts.Options = {
+    chart: {
+      panning: {
+        enabled: false
+      }
+    },
     accessibility: {
       enabled: true
     },

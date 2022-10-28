@@ -1,0 +1,13 @@
+<div class="strategies-container">
+  <ng-template ngFor let-col [ngForOf]="[0, 1]">
+    <div class="column">
+      <ng-template ngFor let-item [ngForOf]="strategies" let-i="index">
+        <strategy-list-item
+          *ngIf="i % 2 == col"
+          class="item"
+          [strategy]="item"
+        ></strategy-list-item>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>
