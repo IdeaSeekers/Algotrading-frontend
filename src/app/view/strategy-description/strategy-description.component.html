@@ -26,4 +26,9 @@
   <p id="strategy-description-field">{{strategy.description}}</p>
 </div>
 
-<bot-creation-form #creationForm *ngIf="showForm" [strategy]="strategy"></bot-creation-form>
+<bot-creation-form
+  #creationForm
+  *ngIf="showForm"
+  [strategy]="strategy"
+  [onSendRequest]="closeForm.bind(this)"
+></bot-creation-form>

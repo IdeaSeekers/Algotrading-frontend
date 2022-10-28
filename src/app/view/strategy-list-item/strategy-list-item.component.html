@@ -1,6 +1,6 @@
 <div class="root">
   <div class="header no-select">
-    <h1>{{strategy.name}}</h1>
+    <h1 (click)="loadStrategyDescription()">{{strategy.name}}</h1>
     <return-chart [minimize]="true" [borderRadius]="10"></return-chart>
     <strategy-brief [strategy]="strategy"></strategy-brief>
   </div>
