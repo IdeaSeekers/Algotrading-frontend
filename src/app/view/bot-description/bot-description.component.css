@@ -1,0 +1,55 @@
+div.bot-description-container {
+  padding-inline: 20%;
+  padding-top: 56px;
+
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+h1 {
+  color: var(--title-color);
+  font-size: 36px;
+  position: relative;
+  left: -12px;
+}
+
+bot-info {
+  position: relative;
+  top: 48px;
+  width: 100%;
+  font-size: 18px;
+}
+
+div.stop_button {
+  padding: inherit;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+mat-button-toggle-group {
+  position: relative;
+  top: 12px;
+  border-radius: 8px;
+}
+
+.mat-button-toggle {
+  color: var(--primary-color);
+}
+
+.mat-button-toggle-checked {
+  color: white;
+  background-color: var(--primary-color);
+}
+
+h2 {
+  padding-top: 36px;
+}
+
+return-chart {
+  position: relative;
+  top: 36px;
+  left: -36px;
+  width: 100%;
+}

@@ -1,0 +1,24 @@
+<div class="bot-description-container">
+  <h1>{{bot.name}}</h1>
+
+  <div class="stop_button">
+    <button id="change_status_button" class="primary" (click)="updateStatus()">Stop</button>
+  </div>
+
+  <mat-button-toggle-group value="entire" appearance="legacy">
+    <mat-button-toggle #month_toggle value="month"> Month </mat-button-toggle>
+    <mat-button-toggle #year_toggle value="year"> Year </mat-button-toggle>
+    <mat-button-toggle #entire_toggle value="entire"> Entire Period </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <ng-container *ngIf="isInitialised">
+    <return-chart
+      [dataName]="bot.name"
+      [monthButton]="month_toggle._buttonElement"
+      [yearButton]="year_toggle._buttonElement"
+      [allButton]="entire_toggle._buttonElement"
+    ></return-chart>
+  </ng-container>
+
+  <bot-info [bot]="bot"></bot-info>
+</div>
