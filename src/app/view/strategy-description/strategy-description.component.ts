@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {Strategy} from "../../model/strategy.model";
 import {Title} from "@angular/platform-browser";
 import {StrategyRisk} from "../../model/strategy-risk.model";
@@ -12,7 +12,7 @@ import {map} from "rxjs";
   templateUrl: './strategy-description.component.html',
   styleUrls: ['strategy-description.component.css']
 })
-export class StrategyDescriptionComponent implements OnInit, AfterViewInit {
+export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() strategy: Strategy;
 
@@ -46,6 +46,8 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit {
     this.titleService.setTitle(this.strategy.name)
   }
 
+  private oldTitle: string
+
   constructor(private titleService: Title, private cdr: ChangeDetectorRef, private backend: BackendService) {
     this.strategy = new Strategy()
     this.strategy.name = "Strategy Name";
@@ -53,7 +55,12 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit {
     this.strategy.activeBots = 512;
     this.strategy.averageReturn = 0.06;
 
+    this.oldTitle = this.titleService.getTitle()
     this.titleService.setTitle(this.strategy.name);
+  }
+
+  ngOnDestroy() {
+    this.titleService.setTitle(this.oldTitle)
   }
 
   onCreationFormOpen(creationForm: BotCreationFormComponent) {
