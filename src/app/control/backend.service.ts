@@ -1,7 +1,89 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
+import {Strategy} from "../model/strategy.model";
+import {StrategyRisk} from "../model/strategy-risk.model";
+import {Parameter} from "../model/parameter.model";
+import {Bot} from "../model/bot.model";
+import {BotStatus} from "../model/bot-status.model";
+
+interface StrategiesId {
+  strategies: Array<{
+    id: number
+  }>
+}
+
+interface StrategyById {
+  name: string,
+  description: string,
+  risk: 'low' | 'medium' | 'high',
+  parameters: Array<{
+    id: number
+  }>
+}
+
+interface ParameterById {
+  name: string,
+  description: string,
+  type: 'int' | 'float',
+  min?: number,
+  max?: number
+}
+
+interface BotsId {
+  bots: Array<{
+    id: number
+  }>
+}
+
+interface BotById {
+  name: string,
+  strategy: {
+    id: number
+  },
+  balance: number,
+  security: string,
+  status: 'running' | 'paused' | 'stopped' | 'unknown',
+  parameters: Array<{
+    id: number,
+    value: number
+  }>
+}
+
+interface CreateBot {
+  bot: number
+}
+
+interface GetActiveBots {
+  bots: {
+    count: number
+  }
+}
+
+interface GetAverageReturn {
+  average_return: number
+}
+
+interface GetHistoryAverageReturn {
+  return_history: Array<{
+    timestamp: number,
+    average_return: number
+  }>
+}
+
+interface GetReturn {
+  return: number
+}
+
+interface GetOperations {
+  operations: Array<{
+    type: 'buy' | 'cell',
+    timestamp: number,
+    executed_price: number,
+    return: number
+  }>
+}
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +106,10 @@ export class BackendService {
     return this.mockBuffer[key]
   }
 
-  getStrategiesId() {
+  getStrategiesId(): Observable<Array<number>> {
+    let target: Observable<StrategiesId>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate('getStrategiesId', () => {
           return {
             strategies: [0, 1, 2, 3, 4, 5, 6, 7].map((value) => {
@@ -40,13 +123,15 @@ export class BackendService {
         subscriber.complete()
       })
     } else {
-      return this.http.get(`${this.apiUrl}/strategy`)
+      target = this.http.get<StrategiesId>(`${this.apiUrl}/strategy`)
     }
+    return target.pipe(map((value) => value.strategies.map(item => item.id)))
   }
 
-  getStrategyById(args: { id: number }) {
+  getStrategyById(args: { id: number }): Observable<Strategy> {
+    let target: Observable<StrategyById>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate(`getStrategyById${args.id}`, () => {
           let description = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at nisi est. Praesent quis scelerisque purus. Aliquam non purus eget ante fringilla tincidunt sed sed metus. Morbi varius nec quam ac faucibus. Cras id aliquet metus. Maecenas nec dui nisi. Etiam elementum quam in quam lobortis, eu imperdiet augue ultricies. Quisque nec felis eget enim luctus aliquam at nec ex. Phasellus rhoncus dui vel libero iaculis, quis condimentum mauris pellentesque. Ut maximus enim massa, a venenatis ante euismod nec. Fusce id imperdiet sem.
 
@@ -78,13 +163,42 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         subscriber.complete()
       })
     } else {
-      return this.http.get(`${this.apiUrl}/strategy/${args.id}`)
+      target = this.http.get<StrategyById>(`${this.apiUrl}/strategy/${args.id}`)
     }
+    return target.pipe(map((value) => {
+      let result = new Strategy()
+      result.id = args.id
+      result.name = value.name
+      result.description = value.description
+      switch (value.risk) {
+        case "low":
+          result.risk = StrategyRisk.Low
+          break
+        case "medium":
+          result.risk = StrategyRisk.Medium
+          break
+        case "high":
+          result.risk = StrategyRisk.High
+          break
+      }
+
+      result.averageReturn = 0
+      result.activeBots = 0
+
+      result.parameters = value.parameters.map(param => {
+        let param_result = new Parameter()
+        param_result.id = param.id
+        return param_result
+      })
+
+      return result
+    }))
   }
 
-  getParameterById(args: { id: number }) {
+  getParameterById(args: { id: number }): Observable<Parameter> {
+    let target: Observable<ParameterById>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate(`getParameterById${args.id}`, () => {
           switch (args.id) {
             case 0:
@@ -113,13 +227,23 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         subscriber.complete()
       })
     } else {
-      return this.http.get(`${this.apiUrl}/parameter/${args.id}`)
+      target = this.http.get<ParameterById>(`${this.apiUrl}/parameter/${args.id}`)
     }
+    return target.pipe(map((value) => {
+      let result = new Parameter()
+      result.id = args.id
+      result.name = value.name
+      result.description = value.description
+      result.min = value.min
+      result.max = value.max
+      return result
+    }))
   }
 
-  getBotsId() {
+  getBotsId(): Observable<Array<number>> {
+    let target: Observable<BotsId>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate('getBotsId', () => {
           return {
             bots: [0, 1, 2, 3, 4, 5, 6, 7, 8].map((value) => {
@@ -133,13 +257,15 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         subscriber.complete()
       })
     } else {
-      return this.http.get(`${this.apiUrl}/bot`)
+      target = this.http.get<BotsId>(`${this.apiUrl}/bot`)
     }
+    return target.pipe(map(value => value.bots.map(item => item.id)))
   }
 
-  getBotById(args: { id: number }) {
+  getBotById(args: { id: number }): Observable<Bot> {
+    let target: Observable<BotById>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate(`getBotById${args.id}`, () => {
           let name = "Bot Name " + (args.id + 1).toString()
           let inputAmount = Math.random() * 1000
@@ -172,8 +298,36 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         subscriber.complete()
       })
     } else {
-      return this.http.get(`${this.apiUrl}/bot/${args.id}`)
+      target = this.http.get<BotById>(`${this.apiUrl}/bot/${args.id}`)
     }
+    return target.pipe(map(value => {
+      let result = new Bot()
+      result.id = args.id
+      result.name = value.name
+      result.currentBalance = value.balance
+      result.parameters = value.parameters.map(param => {
+        let param_model = new Parameter()
+        param_model.id = param.id
+        param_model.value = param.value
+        return param_model
+      })
+      result.strategyId = value.strategy.id
+      switch (value.status) {
+        case "paused":
+          result.status = BotStatus.Paused
+          break
+        case "running":
+          result.status = BotStatus.Running
+          break
+        case "stopped":
+          result.status = BotStatus.Stopped
+          break
+        case "unknown":
+          result.status = BotStatus.Unknown
+          break
+      }
+      return result
+    }))
   }
 
   createBot(args: {
@@ -187,20 +341,22 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
       id: number,
       value: number
     }>
-  }) {
+  }): Observable<number> {
+    let target: Observable<CreateBot>
     if (this.shouldMock) {
-      return new Observable(subscriber => {
+      target = new Observable(subscriber => {
         subscriber.next({
           bot: 0
         })
         subscriber.complete();
       })
     } else {
-      return this.http.post(`${this.apiUrl}/product`, args)
+      target = this.http.post<CreateBot>(`${this.apiUrl}/product`, args)
     }
+    return target.pipe(map(value => value.bot))
   }
 
-  stopBot(args: {id: number}) {
+  stopBot(args: { id: number }): Observable<{}> {
     if (this.shouldMock) {
       return new Observable(subscriber => {
         subscriber.complete()
@@ -213,7 +369,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
   changeStatus(args: {
     id: number,
     status: 'running' | 'paused'
-  }) {
+  }): Observable<{}> {
     if (this.shouldMock) {
       return new Observable(subscriber => {
         subscriber.complete()
@@ -225,9 +381,10 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
     }
   }
 
-  getNumberOfActiveBots(args: {id: number}) {
+  getNumberOfActiveBots(args: { id: number }): Observable<number> {
+    let target: Observable<GetActiveBots>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate(`getNumberOfActiveBots${args.id}`, () => {
           return {
             bots: {
@@ -239,17 +396,19 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         subscriber.complete()
       })
     } else {
-      return this.http.get(`${this.apiUrl}/strategy/${args.id}/active`)
+      target = this.http.get<GetActiveBots>(`${this.apiUrl}/strategy/${args.id}/active`)
     }
+    return target.pipe(map(value => value.bots.count))
   }
 
   getAverageStrategyReturn(args: {
     id: number,
     from?: number,
     to?: number,
-  }) {
+  }): Observable<number> {
+    let target: Observable<GetAverageReturn>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate(`getAverageStrategyReturn${args.id}`, () => {
           return {
             average_return: Math.random() * 1000 - 500
@@ -271,13 +430,14 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         }
         query += `timestamp_to=${args.to}`
       }
-      return this.http.get(`${this.apiUrl}/strategy/${args.id}/average_return${query}`)
+      target = this.http.get<GetAverageReturn>(`${this.apiUrl}/strategy/${args.id}/average_return${query}`)
     }
+    return target.pipe(map(value => value.average_return))
   }
 
-  getStrategyReturnHistory(args: {id: number}) {
+  getStrategyReturnHistory(args: { id: number }): Observable<GetHistoryAverageReturn> {
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      return new Observable(subscriber => {
         let data = this.http.get<Array<Array<number>>>('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/usdeur.json')
         data.subscribe({
           next(value) {
@@ -296,7 +456,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         })
       })
     } else {
-      return this.http.get(`${this.apiUrl}/strategy/${args.id}/return_history`)
+      return this.http.get<GetHistoryAverageReturn>(`${this.apiUrl}/strategy/${args.id}/return_history`)
     }
   }
 
@@ -304,9 +464,10 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
     id: number,
     from?: number,
     to?: number,
-  }) {
+  }): Observable<number> {
+    let target: Observable<GetReturn>
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      target = new Observable(subscriber => {
         let value = this.getOrCreate(`getBotReturn${args.id}`, () => {
           return {
             return: Math.random() * 1000 - 500
@@ -328,13 +489,14 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         }
         query += `timestamp_to=${args.to}`
       }
-      return this.http.get(`${this.apiUrl}/bot/${args.id}/average_return${query}`)
+      target = this.http.get<GetReturn>(`${this.apiUrl}/bot/${args.id}/average_return${query}`)
     }
+    return target.pipe(map(value => value.return))
   }
 
-  getBotOperationsHistory(args: {id: number}) {
+  getBotOperationsHistory(args: { id: number }): Observable<GetOperations> {
     if (this.shouldMock) {
-      return new Observable<Object>(subscriber => {
+      return new Observable(subscriber => {
         let data = this.http.get<Array<Array<number>>>('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/usdeur.json')
         data.subscribe({
           next(value) {
@@ -355,7 +517,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         })
       })
     } else {
-      return this.http.get(`${this.apiUrl}/bot/${args.id}/operations`)
+      return this.http.get<GetOperations>(`${this.apiUrl}/bot/${args.id}/operations`)
     }
   }
 

@@ -1,22 +1,19 @@
-import {Strategy} from "./strategy.model";
-
-export enum Status {
-  Running = "Running",
-  Paused = "Paused",
-  Stopped = "Stopped",
-}
+import {Parameter} from "./parameter.model";
+import {BotStatus} from "./bot-status.model";
 
 export class Bot {
+  id: number = 0
   name: string = "Bot name";
+  strategyId: number = 0
 
-  inputAmount: number = 1000;
-  currentBalance: number = 900;
-  absoluteIncome: number = -100;
-  relativeIncome: number = -0.1;
+  parameters: Array<Parameter> = []
 
-  strategy: Strategy = new Strategy();
+  currentBalance: number = 0;
+  status: BotStatus = BotStatus.Unknown
 
-  status: Status = Status.Running;
+  inputAmount: number = 0;
+  absoluteIncome: number = 0;
+  relativeIncome: number = 0;
 
   getRelativeIncomeStatus(): string {
     if (this.relativeIncome > 0) {
@@ -30,12 +27,14 @@ export class Bot {
 
   getStatusLevel(): string {
     switch (this.status) {
-      case Status.Running:
+      case BotStatus.Running:
         return "positive";
-      case Status.Paused:
+      case BotStatus.Paused:
         return "neutral";
-      case Status.Stopped:
+      case BotStatus.Stopped:
         return "negative";
+      case BotStatus.Unknown:
+        return "negative"
     }
   }
 }
