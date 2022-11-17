@@ -438,17 +438,30 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
   getStrategyReturnHistory(args: { id: number }): Observable<GetHistoryAverageReturn> {
     if (this.shouldMock) {
       return new Observable(subscriber => {
+        let key = `getStrategyReturnHistory${args.id}`
+        if (this.mockBuffer[key]) {
+          subscriber.next(this.mockBuffer[key])
+          subscriber.complete()
+          return
+        }
+        let mockBuf = this.mockBuffer
         let data = this.http.get<Array<Array<number>>>('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/usdeur.json')
         data.subscribe({
           next(value) {
-            subscriber.next({
-              return_history: value.map(item => {
+            let prev = Math.random()
+            let ret = {
+              return_history: value.map((item, index) => {
+                if (index % 500 == 0) {
+                  prev = Math.random()
+                }
                 return {
                   timestamp: item[0],
-                  average_return: item[1]
+                  average_return: item[1] * (prev * 0.4 + 0.5)
                 }
               })
-            })
+            }
+            mockBuf[key] = ret
+            subscriber.next(ret)
           },
           complete() {
             subscriber.complete()

@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts/highstock';
 import {Chart} from 'highcharts/highstock';
 import Accessibility from "highcharts/modules/accessibility";
 import Data from "highcharts/modules/data"
+import {Observable} from "rxjs";
 
 Accessibility(Highcharts)
 Data(Highcharts)
@@ -90,15 +91,21 @@ export class ReturnChartComponent {
 
   setChartProxy: (chart: Chart) => void
 
+  updateChartData(observable: Observable<Array<{
+    timestamp: number,
+    value: number
+  }>>) {
+    observable.subscribe(data => {
+      if (this.chart) {
+        this.chart.series[0].setData(data.map(value => [value.timestamp, value.value]))
+        this.minTime = this.chart.series[0].xAxis.min!
+        this.maxTime = this.chart.series[0].xAxis.max!
+      }
+    })
+  }
+
   setChart(chart: Chart) {
     this.chart = chart
-    Highcharts.getJSON(
-      'https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/usdeur.json',
-      (data: Array<Array<any>>) => {
-        chart.series[0].setData(data)
-        this.minTime = chart.series[0].xAxis.min!
-        this.maxTime = chart.series[0].xAxis.max!
-      })
   }
 
   private setChartInterval(chart: Chart, newMin: number) {
