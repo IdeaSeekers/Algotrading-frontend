@@ -12,8 +12,13 @@ export class Bot {
   status: BotStatus = BotStatus.Unknown
 
   inputAmount: number = 0;
-  absoluteIncome: number = 0;
-  relativeIncome: number = 0;
+
+  public get absoluteIncome(): number {
+    return this.currentBalance - this.inputAmount
+  }
+  public get relativeIncome(): number {
+    return this.absoluteIncome / this.inputAmount
+  }
 
   getRelativeIncomeStatus(): string {
     if (this.relativeIncome > 0) {
