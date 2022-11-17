@@ -5,6 +5,8 @@
     <button id="change_status_button" class="primary" (click)="updateStatus()">Stop</button>
   </div>
 
+  <bot-info [bot]="bot"></bot-info>
+
   <mat-button-toggle-group value="entire" appearance="legacy">
     <mat-button-toggle #month_toggle value="month"> Month </mat-button-toggle>
     <mat-button-toggle #year_toggle value="year"> Year </mat-button-toggle>
@@ -19,6 +21,4 @@
       [allButton]="entire_toggle._buttonElement"
     ></return-chart>
   </ng-container>
-
-  <bot-info [bot]="bot"></bot-info>
 </div>
