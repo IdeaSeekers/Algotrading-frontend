@@ -411,7 +411,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
       target = new Observable(subscriber => {
         let value = this.getOrCreate(`getAverageStrategyReturn${args.id}`, () => {
           return {
-            average_return: Math.random() * 1000 - 500
+            average_return: Math.random() * 2
           }
         })
         subscriber.next(value)
