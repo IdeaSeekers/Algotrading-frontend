@@ -1,10 +1,11 @@
 import {Parameter} from "./parameter.model";
 import {BotStatus} from "./bot-status.model";
+import {Strategy} from "./strategy.model";
 
 export class Bot {
   id: number = 0
   name: string = "Bot name";
-  strategyId: number = 0
+  strategy: Strategy = new Strategy()
 
   parameters: Array<Parameter> = []
 

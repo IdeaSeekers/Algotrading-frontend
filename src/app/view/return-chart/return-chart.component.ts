@@ -2,11 +2,9 @@ import {Component, ElementRef, Input} from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import {Chart} from 'highcharts/highstock';
 import Accessibility from "highcharts/modules/accessibility";
-import Data from "highcharts/modules/data"
 import {Observable} from "rxjs";
 
 Accessibility(Highcharts)
-Data(Highcharts)
 
 @Component({
   selector: 'return-chart',

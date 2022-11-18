@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Strategy} from "../../model/strategy.model";
-import {BackendService} from "../../control/backend.service";
+import {BackendService} from "../../control/services/backend.service";
 import {IdList} from "../../model/id-list.model";
 
 @Component({

@@ -1,9 +1,9 @@
 <div class="bots-container">
-  <ng-template ngFor let-col [ngForOf]="[0, 1, 2]">
+  <ng-template ngFor let-col [ngForOf]="[0, 1]">
     <div class="column">
       <ng-template ngFor let-item [ngForOf]="bots" let-i="index">
         <bot-list-item
-          *ngIf="i % 3 == col"
+          *ngIf="i % 2 == col"
           class="item"
           [bot]="item"
         ></bot-list-item>

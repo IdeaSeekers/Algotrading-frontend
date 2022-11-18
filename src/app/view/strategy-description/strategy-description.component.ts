@@ -4,7 +4,7 @@ import {Title} from "@angular/platform-browser";
 import {StrategyRisk} from "../../model/strategy-risk.model";
 import {BotCreationFormComponent} from "../bot-creation-form/bot-creation-form.component";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
-import {BackendService} from "../../control/backend.service";
+import {BackendService} from "../../control/services/backend.service";
 import {map} from "rxjs";
 
 @Component({
@@ -16,7 +16,7 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
 
   @Input() strategy: Strategy;
 
-  @ViewChild('creationForm', { static: false }) set creationForm(value: BotCreationFormComponent | undefined) {
+  @ViewChild('creationForm', {static: false}) set creationForm(value: BotCreationFormComponent | undefined) {
     if (value) {
       this.onCreationFormOpen(value)
     }
@@ -33,12 +33,14 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
     this.chart.updateChartData(
       this.backend
         .getStrategyReturnHistory({id: this.strategy.id})
-        .pipe(map(value => value.return_history.map(item => {
-          return {
-            timestamp: item.timestamp,
-            value: item.average_return
-          }
-        })))
+        .pipe(map(value =>
+          value.return_history.map(item => {
+            return {
+              timestamp: item.timestamp,
+              value: item.average_return
+            }
+          })
+        ))
     )
   }
 
@@ -46,7 +48,7 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
     this.titleService.setTitle(this.strategy.name)
   }
 
-  private oldTitle: string
+  private readonly oldTitle: string
 
   constructor(private titleService: Title, private cdr: ChangeDetectorRef, private backend: BackendService) {
     this.strategy = new Strategy()

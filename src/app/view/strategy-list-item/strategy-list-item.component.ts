@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {Strategy} from "../../model/strategy.model";
-import {NavigationService} from "../../control/navigation.service";
+import {NavigationService} from "../../control/services/navigation.service";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
-import {BackendService} from "../../control/backend.service";
+import {BackendService} from "../../control/services/backend.service";
 import { map } from 'rxjs';
 
 @Component({

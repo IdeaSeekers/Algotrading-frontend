@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Bot} from "../../model/bot.model";
-import {BackendService} from "../../control/backend.service";
+import {BackendService} from "../../control/services/backend.service";
 import {IdList} from "../../model/id-list.model";
 import {environment} from "../../../environments/environment";
 
@@ -32,6 +32,10 @@ export class BotListComponent implements OnInit, OnDestroy {
       }
 
       bot.inputAmount = bot.parameters.find((value) => value.id == 0)!.value!
+      this.backend.getStrategyById({id: bot.strategy.id}).subscribe(value => {
+        bot.strategy = value
+      })
+
       this.bots.push(bot)
       this.bots.sort((a, b) => {
         if (a.name < b.name) {

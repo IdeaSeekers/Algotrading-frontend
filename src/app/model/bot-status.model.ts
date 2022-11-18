@@ -1,6 +1,6 @@
 export enum BotStatus {
-  Running,
-  Paused,
-  Stopped,
-  Unknown,
+  Running = "Running",
+  Paused = "Paused",
+  Stopped = "Stopped",
+  Unknown = "Unknown",
 }

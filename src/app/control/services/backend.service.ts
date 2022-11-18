@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {map, Observable} from "rxjs";
-import {Strategy} from "../model/strategy.model";
-import {StrategyRisk} from "../model/strategy-risk.model";
-import {Parameter} from "../model/parameter.model";
-import {Bot} from "../model/bot.model";
-import {BotStatus} from "../model/bot-status.model";
+import {Strategy} from "../../model/strategy.model";
+import {StrategyRisk} from "../../model/strategy-risk.model";
+import {Parameter} from "../../model/parameter.model";
+import {Bot} from "../../model/bot.model";
+import {BotStatus} from "../../model/bot-status.model";
 
 interface StrategiesId {
   strategies: Array<{
@@ -311,7 +311,8 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         param_model.value = param.value
         return param_model
       })
-      result.strategyId = value.strategy.id
+      result.strategy = new Strategy()
+      result.strategy.id = value.strategy.id
       switch (value.status) {
         case "paused":
           result.status = BotStatus.Paused
@@ -510,16 +511,27 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
   getBotOperationsHistory(args: { id: number }): Observable<GetOperations> {
     if (this.shouldMock) {
       return new Observable(subscriber => {
+        let key = `getBotOperationsHistory${args.id}`
+        if (this.mockBuffer[key]) {
+          subscriber.next(this.mockBuffer[key])
+          subscriber.complete()
+          return
+        }
+        let mockBuf = this.mockBuffer
         let data = this.http.get<Array<Array<number>>>('https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/usdeur.json')
         data.subscribe({
           next(value) {
+            let prev = Math.random()
             subscriber.next({
-              operations: value.map(item => {
+              operations: value.map((item, index) => {
+                if (index % 1000 == 0) {
+                  prev = Math.random()
+                }
                 return {
                   type: 'buy',
                   timestamp: item[0],
                   executed_price: Math.random() * item[1],
-                  return: item[1]
+                  return: item[1] * (prev * 0.4 + 0.5)
                 }
               })
             })
