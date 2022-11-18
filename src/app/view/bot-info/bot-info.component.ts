@@ -5,11 +5,16 @@ import {Bot} from "../../model/bot.model";
   selector: 'bot-info',
   template: `
     <div>
-      <p>Input Amount: {{bot.inputAmount | number:'1.0-2'}}₽</p>
-      <p>Current Balance: {{bot.currentBalance | number:'1.0-2'}}₽</p>
-      <p>Income: <span class="{{bot.getRelativeIncomeStatus()}}">
-        {{bot.absoluteIncome | number:'1.0-2'}}₽ ({{bot.relativeIncome | number:'1.0-4' | percent}})
-      </span></p>
+      <div style="display: flex; justify-content: space-between">
+        <p style="flex-basis: 30%">Current Balance: {{bot.currentBalance | number:'1.0-2'}}₽</p>
+        <p style="flex-basis: 69%">Status: <span class="{{bot.getStatusLevel()}}">{{bot.status}}</span></p>
+      </div>
+      <div style="display: flex; justify-content: space-between">
+        <p style="flex-basis: 30%">Income: <span class="{{bot.getRelativeIncomeStatus()}}">
+          {{bot.absoluteIncome | number:'1.0-2'}}₽ ({{bot.relativeIncome | number:'1.0-4' | percent}})
+        </span></p>
+        <p style="flex-basis: 69%">Strategy: {{bot.strategy.name}}</p>
+      </div>
     </div>
   `,
   styles: [`
