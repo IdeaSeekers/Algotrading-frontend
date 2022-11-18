@@ -47,8 +47,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.navigation.navigationEvents.subscribe(event => {
-      this.historyViews.push(event)
-      this.viewComponent(event)
+      if (event == 'back') {
+        this.back()
+      } else {
+        this.historyViews.push(event)
+        this.viewComponent(event)
+      }
     })
 
     this.navigation.loadStrategiesList()

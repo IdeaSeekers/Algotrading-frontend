@@ -34,8 +34,15 @@ export class BotCreationFormComponent {
 
   private sendRequest() {
     console.warn(this.botCreationForm.value)
-    // this.backend.createBot(this.botName, this.rubles)
-    //   .subscribe()
+    // this.backend.createBot({
+    //   name: this.botName,
+    //   strategy: {
+    //     id: this.strategy.id
+    //   },
+    //   initial_balance: this.initialBalance,
+    //   security: "rub",
+    //   parameters: []
+    // }).subscribe()
     if (this.onSendRequest) {
       this.onSendRequest()
     }

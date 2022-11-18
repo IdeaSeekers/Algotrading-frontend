@@ -1,6 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {Bot} from "../../model/bot.model";
 import {NavigationService} from "../../control/services/navigation.service";
+import {BackendService} from "../../control/services/backend.service";
 
 @Component({
   selector: 'bot-list-item',
@@ -10,7 +11,11 @@ import {NavigationService} from "../../control/services/navigation.service";
 export class BotListItemComponent {
   @Input() bot!: Bot
 
-  constructor(private navigation: NavigationService) {
+  constructor(private navigation: NavigationService, private backend: BackendService) {
+  }
+
+  stopBot() {
+    this.backend.stopBot({id: this.bot.id}).subscribe()
   }
 
   navigateToBotDescription() {

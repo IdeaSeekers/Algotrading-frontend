@@ -12,7 +12,11 @@ import {Bot} from "../../model/bot.model";
 })
 export class NavigationService {
 
-  navigationEvents = new EventEmitter<NavigationEventModel>(true)
+  navigationEvents = new EventEmitter<NavigationEventModel | 'back'>(true)
+
+  loadBack() {
+    this.navigationEvents.emit('back')
+  }
 
   loadStrategiesList() {
     this.navigationEvents.emit(new NavigationEventModel(

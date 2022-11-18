@@ -5,6 +5,7 @@ import {BotStatus} from "../../model/bot-status.model";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
 import {BackendService} from "../../control/services/backend.service";
 import {map} from "rxjs";
+import {NavigationService} from "../../control/services/navigation.service";
 
 @Component({
   selector: 'bot-description',
@@ -38,7 +39,12 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
 
   private readonly oldTitle: string
 
-  constructor(private titleService: Title, private cdr: ChangeDetectorRef, private backend: BackendService) {
+  constructor(
+    private titleService: Title,
+    private cdr: ChangeDetectorRef,
+    private backend: BackendService,
+    private navigation: NavigationService
+  ) {
     this.bot = new Bot()
     this.bot.name = "Bot Name";
     this.bot.inputAmount = 1000;
@@ -49,10 +55,12 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
     this.titleService.setTitle(this.bot.name);
   }
 
-  ngOnDestroy() {
-    this.titleService.setTitle(this.oldTitle)
+  stopBot() {
+    this.backend.stopBot({id: this.bot.id}).subscribe()
+    this.navigation.loadBack()
   }
 
-  updateStatus() {
+  ngOnDestroy() {
+    this.titleService.setTitle(this.oldTitle)
   }
 }
