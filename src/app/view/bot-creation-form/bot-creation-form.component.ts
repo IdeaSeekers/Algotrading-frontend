@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import {Strategy} from "../../model/strategy.model";
 import {User} from "../../model/user.model";
 import {BackendService} from "../../control/backend.service";
@@ -17,10 +18,13 @@ export class BotCreationFormComponent {
   @ViewChild('close_button') closeButton!: ElementRef<HTMLButtonElement>
   @ViewChild('start_button') startButton!: ElementRef<HTMLButtonElement>
 
-  botName: string = ''
-  rubles: number = 0
+  botCreationForm = this.fb.group({
+    botName: ['', Validators.required],
+    rubles: [0, [Validators.min(10), Validators.max(1000000)]],
+    terms: [false, Validators.requiredTrue],
+  })
 
-  constructor(private backend: BackendService) {
+  constructor(private fb: FormBuilder, private backend: BackendService) {
     this.user = new User()
     this.user.balance = 1000000
     this.sendRequestProvider = this.sendRequest.bind(this)
@@ -29,8 +33,9 @@ export class BotCreationFormComponent {
   sendRequestProvider: () => void
 
   private sendRequest() {
-    this.backend.createBot(this.botName, this.rubles)
-      .subscribe()
+    console.warn(this.botCreationForm.value)
+    // this.backend.createBot(this.botName, this.rubles)
+    //   .subscribe()
     if (this.onSendRequest) {
       this.onSendRequest()
     }
