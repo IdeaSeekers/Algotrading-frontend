@@ -141,3 +141,7 @@ input[type=number] {
   border-radius: 10px;
   font-size: 20px;
 }
+
+.start_bot_button:disabled {
+  background-color: var(--secondary-color);
+}
