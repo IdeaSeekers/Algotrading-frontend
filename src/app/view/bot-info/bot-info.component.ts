@@ -5,16 +5,12 @@ import {Bot} from "../../model/bot.model";
   selector: 'bot-info',
   template: `
     <div>
-      <div style="display: flex; justify-content: space-between">
-        <p style="flex-basis: 30%">Current Balance: {{bot.currentBalance | number:'1.0-2'}}₽</p>
-        <p style="flex-basis: 69%">Status: <span class="{{bot.getStatusLevel()}}">{{bot.status}}</span></p>
-      </div>
-      <div style="display: flex; justify-content: space-between">
-        <p style="flex-basis: 30%">Income: <span class="{{bot.getRelativeIncomeStatus()}}">
-          {{bot.absoluteIncome | number:'1.0-2'}}₽ ({{bot.relativeIncome | number:'1.0-4' | percent}})
-        </span></p>
-        <p style="flex-basis: 69%">Strategy: {{bot.strategy.name}}</p>
-      </div>
+      <p class="left"><span class="info-title">Current Balance</span>:<br/>{{bot.currentBalance | number:'1.0-2'}}₽</p>
+      <p class="right"><span class="info-title">Status</span>:<br/><span class="{{bot.getStatusLevel()}}">{{bot.status}}</span></p>
+      <p class="left"><span class="info-title">Income</span>:<br/><span class="{{bot.getRelativeIncomeStatus()}}">
+        {{bot.absoluteIncome | number:'1.0-2'}}₽ ({{bot.relativeIncome | number:'1.0-4' | percent}})
+      </span></p>
+      <p class="right"><span class="info-title">Strategy</span>:<br/>{{bot.strategy.name}}</p>
     </div>
   `,
   styles: [`
@@ -22,10 +18,30 @@ import {Bot} from "../../model/bot.model";
     .neutral { color: var(--neutral-color); }
     .negative { color: var(--negative-color); }
 
+    .info-title {
+      font-weight: bolder;
+      font-style: normal;
+    }
+
+    p {
+      font-style: italic;
+    }
+
+    /*.left {*/
+    /*  text-align: left;*/
+    /*}*/
+
+    /*.right {*/
+    /*  text-align: right;*/
+    /*}*/
+
     div {
       width: inherit;
       padding: inherit;
       margin: inherit;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
   `]
 })

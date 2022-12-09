@@ -2,7 +2,7 @@
   <h1>{{bot.name}}</h1>
 
   <div class="stop_button">
-    <button id="change_status_button" class="primary" (click)="updateStatus()">Stop</button>
+    <button id="change_status_button" class="primary" (click)="stopBot()">Stop</button>
   </div>
 
   <bot-info [bot]="bot"></bot-info>
@@ -15,6 +15,7 @@
 
   <ng-container *ngIf="isInitialised">
     <return-chart
+      #chart
       [dataName]="bot.name"
       [monthButton]="month_toggle._buttonElement"
       [yearButton]="year_toggle._buttonElement"

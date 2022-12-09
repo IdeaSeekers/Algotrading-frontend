@@ -1,10 +1,10 @@
 <div class="root">
   <div class="header no-select">
-    <h1>{{bot.name}}</h1>
+    <h1 (click)="navigateToBotDescription()">{{bot.name}}</h1>
     <bot-info [bot]="bot"></bot-info>
   </div>
   <div class="footer">
-    <button class="secondary">View</button>
-    <button class="primary">Stop</button>
+    <button class="secondary" (click)="navigateToBotDescription()">View</button>
+    <button class="primary" (click)="stopBot()">Stop</button>
   </div>
 </div>

@@ -1,18 +1,22 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {NavigationEventModel} from "../model/navigation-event.model";
-import {StrategyListComponent} from "../view/strategy-list/strategy-list.component";
-import {Strategy} from "../model/strategy.model";
-import {StrategyDescriptionComponent} from "../view/strategy-description/strategy-description.component";
-import {BotListComponent} from "../view/bot-list/bot-list.component";
-import {BotDescriptionComponent} from "../view/bot-description/bot-description.component";
-import {Bot} from "../model/bot.model";
+import {NavigationEventModel} from "../../model/navigation-event.model";
+import {StrategyListComponent} from "../../view/strategy-list/strategy-list.component";
+import {Strategy} from "../../model/strategy.model";
+import {StrategyDescriptionComponent} from "../../view/strategy-description/strategy-description.component";
+import {BotListComponent} from "../../view/bot-list/bot-list.component";
+import {BotDescriptionComponent} from "../../view/bot-description/bot-description.component";
+import {Bot} from "../../model/bot.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
 
-  navigationEvents = new EventEmitter<NavigationEventModel>(true)
+  navigationEvents = new EventEmitter<NavigationEventModel | 'back'>(true)
+
+  loadBack() {
+    this.navigationEvents.emit('back')
+  }
 
   loadStrategiesList() {
     this.navigationEvents.emit(new NavigationEventModel(

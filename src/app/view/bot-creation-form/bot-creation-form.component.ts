@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {Strategy} from "../../model/strategy.model";
 import {User} from "../../model/user.model";
-import {BackendService} from "../../control/backend.service";
+import {BackendService} from "../../control/services/backend.service";
 
 @Component({
   selector: 'bot-creation-form',
@@ -34,8 +34,15 @@ export class BotCreationFormComponent {
 
   private sendRequest() {
     console.warn(this.botCreationForm.value)
-    // this.backend.createBot(this.botName, this.rubles)
-    //   .subscribe()
+    // this.backend.createBot({
+    //   name: this.botName,
+    //   strategy: {
+    //     id: this.strategy.id
+    //   },
+    //   initial_balance: this.initialBalance,
+    //   security: "rub",
+    //   parameters: []
+    // }).subscribe()
     if (this.onSendRequest) {
       this.onSendRequest()
     }
