@@ -3,9 +3,9 @@ import {Bot} from "../../model/bot.model";
 import {Title} from "@angular/platform-browser";
 import {BotStatus} from "../../model/bot-status.model";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
-import {BackendService} from "../../control/services/backend.service";
 import {map} from "rxjs";
 import {NavigationService} from "../../control/services/navigation.service";
+import {BotsService} from "../../control/services/bots.service";
 
 @Component({
   selector: 'bot-description',
@@ -24,7 +24,7 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
     this.isInitialised = true
     this.cdr.detectChanges()
     this.chart.updateChartData(
-      this.backend
+      this.botsService
         .getBotOperationsHistory({id: this.bot.id})
         .pipe(map(value =>
           value.operations.map(item => {
@@ -42,7 +42,7 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
   constructor(
     private titleService: Title,
     private cdr: ChangeDetectorRef,
-    private backend: BackendService,
+    private botsService: BotsService,
     private navigation: NavigationService
   ) {
     this.bot = new Bot()
@@ -56,7 +56,7 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
   }
 
   stopBot() {
-    this.backend.stopBot({id: this.bot.id}).subscribe()
+    this.botsService.stopBot({id: this.bot.id}).subscribe()
     this.navigation.loadBack()
   }
 

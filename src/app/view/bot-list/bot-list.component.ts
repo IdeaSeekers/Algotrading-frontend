@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Bot} from "../../model/bot.model";
-import {BackendService} from "../../control/services/backend.service";
 import {IdList} from "../../model/id-list.model";
 import {environment} from "../../../environments/environment";
+import {BotsService} from "../../control/services/bots.service";
+import {StrategyService} from "../../control/services/strategy.service";
 
 @Component({
   selector: 'bot-list',
@@ -16,10 +17,10 @@ export class BotListComponent implements OnInit, OnDestroy {
 
   private data: IdList<Bot>
 
-  constructor(private backend: BackendService) {
+  constructor(private botsService: BotsService, private strategyService: StrategyService) {
     this.data = new IdList(
-      backend.getBotsId.bind(backend),
-      (id: number) => backend.getBotById({id: id})
+      botsService.getBotsId.bind(botsService),
+      (id: number) => botsService.getBotById({id: id})
     )
   }
 
@@ -35,7 +36,7 @@ export class BotListComponent implements OnInit, OnDestroy {
 
       expected += 1
       bot.inputAmount = bot.parameters.find((value) => value.id == 1)!.value!
-      this.backend.getStrategyById({id: bot.strategy.id}).subscribe(value => {
+      this.strategyService.getStrategyById({id: bot.strategy.id}).subscribe(value => {
         bot.strategy = value
       }).add(() => {
         newBots.push(bot)

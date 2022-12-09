@@ -4,8 +4,8 @@ import {Title} from "@angular/platform-browser";
 import {StrategyRisk} from "../../model/strategy-risk.model";
 import {BotCreationFormComponent} from "../bot-creation-form/bot-creation-form.component";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
-import {BackendService} from "../../control/services/backend.service";
 import {map} from "rxjs";
+import {StrategyService} from "../../control/services/strategy.service";
 
 @Component({
   selector: 'strategy-description',
@@ -31,7 +31,7 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
     this.isInitialised = true
     this.cdr.detectChanges()
     this.chart.updateChartData(
-      this.backend
+      this.strategyService
         .getStrategyReturnHistory({id: this.strategy.id})
         .pipe(map(value =>
           value.return_history.map(item => {
@@ -50,7 +50,7 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
 
   private readonly oldTitle: string
 
-  constructor(private titleService: Title, private cdr: ChangeDetectorRef, private backend: BackendService) {
+  constructor(private titleService: Title, private cdr: ChangeDetectorRef, private strategyService: StrategyService) {
     this.strategy = new Strategy()
     this.strategy.name = "Strategy Name";
     this.strategy.risk = StrategyRisk.Low;

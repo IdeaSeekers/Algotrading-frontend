@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Strategy} from "../../model/strategy.model";
-import {BackendService} from "../../control/services/backend.service";
 import {IdList} from "../../model/id-list.model";
+import {StrategyService} from "../../control/services/strategy.service";
 
 @Component({
   selector: 'strategy-list',
@@ -14,20 +14,20 @@ export class StrategyListComponent implements OnInit {
 
   private strategiesData: IdList<Strategy>
 
-  constructor(private backend: BackendService) {
+  constructor(private strategyService: StrategyService) {
     this.strategiesData = new IdList<Strategy>(
-      backend.getStrategiesId.bind(backend),
-      id => backend.getStrategyById({id: id})
+      strategyService.getStrategiesId.bind(strategyService),
+      id => strategyService.getStrategyById({id: id})
     )
   }
 
   ngOnInit(): void {
     this.strategiesData.getFreshData().subscribe(([id, strategy]) => {
       this.strategies.push(strategy)
-      this.backend.getAverageStrategyReturn({id: id}).subscribe(value => {
+      this.strategyService.getAverageStrategyReturn({id: id}).subscribe(value => {
         strategy.averageReturn = value
       })
-      this.backend.getNumberOfActiveBots({id: id}).subscribe(value => {
+      this.strategyService.getNumberOfActiveBots({id: id}).subscribe(value => {
         strategy.activeBots = value
         this.strategies.sort((a, b) => b.activeBots - a.activeBots)
       })
