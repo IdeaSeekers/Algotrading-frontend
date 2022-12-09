@@ -39,9 +39,7 @@ interface BotsId {
 
 interface BotById {
   name: string,
-  strategy: {
-    id: number
-  },
+  strategyId: number,
   balance: number,
   security: string,
   status: 'running' | 'paused' | 'stopped' | 'unknown',
@@ -272,9 +270,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
           let currentBalance = Math.random() * 1000
           return {
             name: name,
-            strategy: {
-              id: 0
-            },
+            strategyId: 0,
             balance: currentBalance,
             security: 'rub',
             status: 'running',
@@ -312,7 +308,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         return param_model
       })
       result.strategy = new Strategy()
-      result.strategy.id = value.strategy.id
+      result.strategy.id = value.strategyId
       switch (value.status) {
         case "paused":
           result.status = BotStatus.Paused
@@ -352,7 +348,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         subscriber.complete();
       })
     } else {
-      target = this.http.post<CreateBot>(`${this.apiUrl}/product`, args)
+      target = this.http.post<CreateBot>(`${this.apiUrl}/bot`, args)
     }
     return target.pipe(map(value => value.bot))
   }
@@ -522,7 +518,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
         data.subscribe({
           next(value) {
             let prev = Math.random()
-            subscriber.next({
+            let ret: GetOperations = {
               operations: value.map((item, index) => {
                 if (index % 1000 == 0) {
                   prev = Math.random()
@@ -534,7 +530,9 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
                   return: item[1] * (prev * 0.4 + 0.5)
                 }
               })
-            })
+            }
+            mockBuf[key] = ret
+            subscriber.next(ret)
           },
           complete() {
             subscriber.complete()

@@ -40,7 +40,7 @@ export class BotCreationFormComponent {
     //     id: this.strategy.id
     //   },
     //   initial_balance: this.initialBalance,
-    //   security: "rub",
+    //   security: "BBG004730N88",
     //   parameters: []
     // }).subscribe()
     if (this.onSendRequest) {

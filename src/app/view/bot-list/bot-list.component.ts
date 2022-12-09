@@ -24,28 +24,47 @@ export class BotListComponent implements OnInit, OnDestroy {
   }
 
   private loadBots() {
-    this.bots = []
+    let newBots: Array<Bot> = []
+    let expected = 0
+    let actual = 0
+    let finished = false
     this.data.getFreshData().subscribe(([_, bot]) => {
-      // TODO: change it
       if (environment.mockBackend) {
         bot.currentBalance *= Math.random() * 2
       }
 
-      bot.inputAmount = bot.parameters.find((value) => value.id == 0)!.value!
+      expected += 1
+      bot.inputAmount = bot.parameters.find((value) => value.id == 1)!.value!
       this.backend.getStrategyById({id: bot.strategy.id}).subscribe(value => {
         bot.strategy = value
-      })
-
-      this.bots.push(bot)
-      this.bots.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1
-        } else if (a.name == b.name) {
-          return 0
-        } else {
-          return 1
+      }).add(() => {
+        newBots.push(bot)
+        actual += 1
+        if (finished && actual >= expected) {
+          this.bots = newBots.sort((a, b) => {
+            if (a.name < b.name) {
+              return -1
+            } else if (a.name == b.name) {
+              return 0
+            } else {
+              return 1
+            }
+          })
         }
       })
+    }).add(() => {
+      finished = true
+      if (finished && actual >= expected) {
+        this.bots = newBots.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1
+          } else if (a.name == b.name) {
+            return 0
+          } else {
+            return 1
+          }
+        })
+      }
     })
   }
 
