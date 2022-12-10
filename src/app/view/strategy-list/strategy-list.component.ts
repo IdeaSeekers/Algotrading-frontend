@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Strategy} from "../../model/strategy.model";
 import {IdList} from "../../model/id-list.model";
 import {StrategyService} from "../../control/services/strategy.service";
+import {ParametersService} from "../../control/services/parameters.service";
 
 @Component({
   selector: 'strategy-list',
@@ -14,7 +15,7 @@ export class StrategyListComponent implements OnInit {
 
   private strategiesData: IdList<Strategy>
 
-  constructor(private strategyService: StrategyService) {
+  constructor(private strategyService: StrategyService, private parametersService: ParametersService) {
     this.strategiesData = new IdList<Strategy>(
       strategyService.getStrategiesId.bind(strategyService),
       id => strategyService.getStrategyById({id: id})
@@ -31,6 +32,11 @@ export class StrategyListComponent implements OnInit {
         strategy.activeBots = value
         this.strategies.sort((a, b) => b.activeBots - a.activeBots)
       })
+      for (let [idx, param] of strategy.parameters.entries()) {
+        this.parametersService.getParameterById({id: param.id}).subscribe(value => {
+          strategy.parameters[idx] = value
+        })
+      }
     })
   }
 }

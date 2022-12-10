@@ -4,6 +4,7 @@ import {IdList} from "../../model/id-list.model";
 import {environment} from "../../../environments/environment";
 import {BotsService} from "../../control/services/bots.service";
 import {StrategyService} from "../../control/services/strategy.service";
+import {ParametersService} from "../../control/services/parameters.service";
 
 @Component({
   selector: 'bot-list',
@@ -17,7 +18,11 @@ export class BotListComponent implements OnInit, OnDestroy {
 
   private data: IdList<Bot>
 
-  constructor(private botsService: BotsService, private strategyService: StrategyService) {
+  constructor(
+    private botsService: BotsService,
+    private strategyService: StrategyService,
+    private parametersService: ParametersService
+  ) {
     this.data = new IdList(
       botsService.getBotsId.bind(botsService),
       (id: number) => botsService.getBotById({id: id})
@@ -36,6 +41,14 @@ export class BotListComponent implements OnInit, OnDestroy {
 
       expected += 1
       bot.inputAmount = bot.parameters.find((value) => value.id == 1)!.value!
+
+      for (let [idx, param] of bot.parameters.entries()) {
+        this.parametersService.getParameterById({id: param.id}).subscribe(value => {
+          value.value = param.value
+          bot.parameters[idx] = value
+        })
+      }
+
       this.strategyService.getStrategyById({id: bot.strategy.id}).subscribe(value => {
         bot.strategy = value
       }).add(() => {

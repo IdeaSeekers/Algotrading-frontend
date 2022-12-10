@@ -30,10 +30,6 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
 
   ngAfterViewInit() {
     this.isInitialised = true
-    this.strategy.parameters = [
-      { id: 0, name: "Test par 1", description: "Test description", value: undefined },
-      { id: 1, name: "Test par 2", description: "Test description", value: undefined },
-    ]
     this.cdr.detectChanges()
     this.chart.updateChartData(
       this.strategyService

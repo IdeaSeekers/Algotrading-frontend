@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from "@angular/core";
+import {Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
 import {Parameter} from "../../model/parameter.model";
 
 @Component({
@@ -21,7 +21,7 @@ import {Parameter} from "../../model/parameter.model";
           <tbody>
           <tr *ngFor="let row of tableData.data">
             <td *ngFor="let h of tableData.headers">
-              {{ row[h.key] }}
+              {{ !isNumber(row[h.key]) ? row[h.key] : (row[h.key] | number:'1.0-2') }}
             </td>
           </tr>
           </tbody>
@@ -57,7 +57,7 @@ import {Parameter} from "../../model/parameter.model";
     }
   `]
 })
-export class ParametersTableComponent {
+export class ParametersTableComponent implements OnInit {
 
   @Input() parameters: Parameter[] | undefined;
   @Input() showValues: boolean | undefined;
@@ -69,6 +69,10 @@ export class ParametersTableComponent {
       this.parameters = [];
     if (this.showValues == undefined)
       this.showValues = false;
+  }
+
+  isNumber(x: any): boolean {
+    return typeof x == "number"
   }
 
   ngOnInit() {
@@ -108,5 +112,5 @@ interface ITableHeader {
 
 interface IDynamicTable {
   headers: ITableHeader[];
-  data: { [name: string]: number | undefined }[];
+  data: { [name: string]: any }[];
 }

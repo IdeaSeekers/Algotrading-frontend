@@ -22,10 +22,6 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.isInitialised = true
-    this.bot.parameters = [
-      {id: 0, name: "Test par 1", description: "Test description", value: 1},
-      {id: 1, name: "Test par 2", description: "Test description", value: 2},
-    ]
     this.cdr.detectChanges()
     this.chart.updateChartData(
       this.botsService
