@@ -10,6 +10,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BotListModule} from "./bot-list.module";
 import {BotDescriptionModule} from "./bot-description.module";
 import {UserService} from "./services/user.service";
+import { UserModule } from './user.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {UserService} from "./services/user.service";
     StrategyListModule,
     StrategyDescriptionModule,
     BotListModule,
-    BotDescriptionModule
+    BotDescriptionModule,
+    UserModule
   ],
   providers: [
     {

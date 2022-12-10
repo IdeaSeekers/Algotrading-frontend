@@ -96,7 +96,6 @@ export class UserService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = this.jwt_token
-    console.log("HERE")
     if (token) {
       let cloned = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)

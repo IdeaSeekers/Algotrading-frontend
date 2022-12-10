@@ -20,7 +20,7 @@ export class BotCreationFormComponent {
 
   botCreationForm = this.fb.group({
     botName: ['', Validators.required],
-    rubles: [0, [Validators.min(10), Validators.max(1000000)]],
+    inputAmount: [0, [Validators.min(10), Validators.max(1000000)]],
     terms: [false, Validators.requiredTrue],
   })
 

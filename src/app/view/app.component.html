@@ -1,5 +1,8 @@
 <div>
   <ng-template viewComponentHost></ng-template>
   <button *ngIf="hasPrevious" class="back" (click)="back()">&larr;</button>
-  <button *ngIf="!isBotList" class="primary bot-list" (click)="navigateBotList()">Bot list</button>
+  <div class="menu">
+    <button *ngIf="!isBotList && isAuthorized" class="primary" (click)="navigateBotList()">Bot list</button>
+    <button *ngIf="!isSignUp && !isAuthorized" class="primary" (click)="navigateSignUp()">Sign Up</button>
+  </div>
 </div>

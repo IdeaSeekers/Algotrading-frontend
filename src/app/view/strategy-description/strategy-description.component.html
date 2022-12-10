@@ -2,7 +2,7 @@
   <h1>{{strategy.name}}</h1>
 
   <div class="pick_button">
-    <button class="primary" (click)="pick()">Pick</button>
+    <button class="primary" (click)="pick()" [disabled]="!userService.isAuthorized()">Pick</button>
   </div>
 
   <strategy-brief [strategy]="strategy"></strategy-brief>
