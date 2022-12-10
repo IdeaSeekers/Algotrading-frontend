@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {map, Observable} from "rxjs";
 import {Bot} from "../../model/bot.model";
 import {Parameter} from "../../model/parameter.model";
-import {Strategy} from "../../model/strategy.model";
 import {BotStatus} from "../../model/bot-status.model";
 import {BackendService} from "./backend.service";
 
@@ -16,8 +15,18 @@ interface BotById {
   name: string,
   strategyId: number,
   balance: number,
-  security: string,
   status: 'running' | 'paused' | 'stopped' | 'unknown',
+  parameters: Array<{
+    id: number,
+    value: number
+  }>
+}
+
+interface CreateBotInput {
+  name: string,
+  strategy: {
+    id: number
+  },
   parameters: Array<{
     id: number,
     value: number
@@ -83,16 +92,15 @@ export class BotsService {
             name: name,
             strategyId: 0,
             balance: currentBalance,
-            security: 'rub',
             status: 'running',
             parameters: [
               {
                 id: 0,
-                value: inputAmount
+                value: 0
               },
               {
                 id: 1,
-                value: 10
+                value: inputAmount
               },
               {
                 id: 2,
@@ -118,8 +126,8 @@ export class BotsService {
         param_model.value = param.value
         return param_model
       })
-      result.strategy = new Strategy()
       result.strategy.id = value.strategyId
+      result.inputAmount = result.parameters.find(x => x.id == 1)!.value!
       switch (value.status) {
         case "paused":
           result.status = BotStatus.Paused
@@ -138,18 +146,7 @@ export class BotsService {
     }))
   }
 
-  createBot(args: {
-    name: string,
-    strategy: {
-      id: number
-    },
-    initial_balance: number,
-    security: string,
-    parameters: Array<{
-      id: number,
-      value: number
-    }>
-  }): Observable<number> {
+  createBot(args: CreateBotInput): Observable<number> {
     let target: Observable<CreateBot>
     if (this.backend.shouldMock) {
       target = new Observable(subscriber => {

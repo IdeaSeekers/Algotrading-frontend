@@ -11,6 +11,13 @@ interface ParameterById {
   max?: number
 }
 
+interface Securities {
+  securities: Array<{
+    name: string,
+    id: number,
+  }>
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,21 +34,21 @@ export class ParametersService {
           switch (args.id) {
             case 0:
               return {
-                name: 'initial amount',
+                name: 'security',
+                description: 'some description',
+                type: 'int'
+              }
+            case 1:
+              return {
+                name: 'initial balance',
                 description: 'some description',
                 type: 'float',
                 min: 0,
                 max: 1000000
               }
-            case 1:
-              return {
-                name: 'lower bound',
-                description: 'some description',
-                type: 'float'
-              }
             default:
               return {
-                name: 'upper bound',
+                name: `some param ${args.id}`,
                 description: 'some description',
                 type: 'float'
               }
@@ -63,4 +70,36 @@ export class ParametersService {
       return result
     }))
   }
+
+  getSecurities(): Observable<Securities> {
+    let target: Observable<Securities>
+    if (this.backend.shouldMock) {
+      target = new Observable(subscriber => {
+        let value = this.backend.getOrCreate('getSecurities', () => {
+          return {
+            securities: [
+              {
+                name: "Нижнекамскнефтехим",
+                id: 0
+              },
+              {
+                name: "Яндекс",
+                id: 1
+              },
+              {
+                name: "Сбер",
+                id: 2
+              }
+            ]
+          }
+        })
+        subscriber.next(value)
+        subscriber.complete()
+      })
+    } else {
+      target = this.backend.http.get<Securities>(`${this.backend.apiUrl}/security`)
+    }
+    return target
+  }
+
 }

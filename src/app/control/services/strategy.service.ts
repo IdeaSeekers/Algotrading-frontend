@@ -89,7 +89,7 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
             name: "Strategy Name " + (args.id + 1).toString(),
             description: description,
             risk: risk,
-            parameters: [0, 1, 2].map((value) => {
+            parameters: [0, 1].map((value) => {
               return {
                 id: value
               }
@@ -119,9 +119,6 @@ Nullam vitae lacinia metus. Class aptent taciti sociosqu ad litora torquent per 
           result.risk = StrategyRisk.High
           break
       }
-
-      result.averageReturn = 0
-      result.activeBots = 0
 
       result.parameters = value.parameters.map(param => {
         let param_result = new Parameter()
