@@ -7,6 +7,7 @@ import {ReturnChartComponent} from "../return-chart/return-chart.component";
 import {map} from "rxjs";
 import {Parameter} from "../../model/parameter.model";
 import {StrategyService} from "../../control/services/strategy.service";
+import {UserService} from "../../control/services/user.service";
 
 @Component({
   selector: 'strategy-description',
@@ -56,7 +57,12 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
 
   private readonly oldTitle: string
 
-  constructor(private titleService: Title, private cdr: ChangeDetectorRef, private strategyService: StrategyService) {
+  constructor(
+    private titleService: Title,
+    private cdr: ChangeDetectorRef,
+    private strategyService: StrategyService,
+    public userService: UserService
+  ) {
     this.strategy = new Strategy()
     this.strategy.name = "Strategy Name";
     this.strategy.risk = StrategyRisk.Low;

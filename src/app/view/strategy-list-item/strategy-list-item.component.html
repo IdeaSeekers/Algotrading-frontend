@@ -4,5 +4,5 @@
     <return-chart #chart [minimize]="true" [borderRadius]="10"></return-chart>
     <strategy-brief [strategy]="strategy"></strategy-brief>
   </div>
-  <button class="primary">Pick</button>
+  <button class="primary" [disabled]="!userService.isAuthorized()">Pick</button>
 </div>

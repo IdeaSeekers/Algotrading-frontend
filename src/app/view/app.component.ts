@@ -3,6 +3,9 @@ import {ViewComponentDirective} from "./view-component.directive";
 import {NavigationService} from "../control/services/navigation.service";
 import {NavigationEventModel} from "../model/navigation-event.model";
 import {BotListComponent} from "./bot-list/bot-list.component";
+import {SignupComponent} from "./signup/signup.component";
+import {UserService} from "../control/services/user.service";
+import {SigninComponent} from "./signin/signin.component";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +16,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild(ViewComponentDirective, {static: true}) viewHost!: ViewComponentDirective;
 
-  constructor(private navigation: NavigationService) {
+  constructor(private navigation: NavigationService, private userService: UserService) {
   }
 
   private historyViews: Array<NavigationEventModel> = []
@@ -23,6 +26,12 @@ export class AppComponent implements OnInit {
   }
 
   isBotList: boolean = false
+  isSignUp: boolean = false
+  isSignIn: boolean = false
+
+  get isAuthorized(): boolean {
+    return this.userService.isAuthorized()
+  }
 
   back() {
     this.historyViews.pop()
@@ -31,6 +40,8 @@ export class AppComponent implements OnInit {
 
   private viewComponent(event: NavigationEventModel) {
     this.isBotList = event.component == BotListComponent
+    this.isSignUp = event.component == SignupComponent
+    this.isSignIn = event.component == SigninComponent
 
     const viewContainerRef = this.viewHost.viewContainerRef
     viewContainerRef.clear()
@@ -43,6 +54,14 @@ export class AppComponent implements OnInit {
 
   navigateBotList() {
     this.navigation.loadBotsList()
+  }
+
+  navigateSignUp() {
+    this.navigation.loadSignUp()
+  }
+
+  navigateSignIn() {
+    this.navigation.loadSignIn()
   }
 
   ngOnInit(): void {

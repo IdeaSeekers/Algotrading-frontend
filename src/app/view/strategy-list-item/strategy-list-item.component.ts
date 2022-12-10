@@ -4,6 +4,7 @@ import {NavigationService} from "../../control/services/navigation.service";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
 import {map} from 'rxjs';
 import {StrategyService} from "../../control/services/strategy.service";
+import {UserService} from "../../control/services/user.service";
 
 @Component({
   selector: 'strategy-list-item',
@@ -15,7 +16,11 @@ export class StrategyListItemComponent implements AfterViewInit {
 
   @ViewChild('chart') chart!: ReturnChartComponent
 
-  constructor(private strategyService: StrategyService, private navigationService: NavigationService) {
+  constructor(
+    private strategyService: StrategyService,
+    private navigationService: NavigationService,
+    public userService: UserService
+  ) {
   }
 
   ngAfterViewInit(): void {

@@ -6,6 +6,8 @@ import {StrategyDescriptionComponent} from "../../view/strategy-description/stra
 import {BotListComponent} from "../../view/bot-list/bot-list.component";
 import {BotDescriptionComponent} from "../../view/bot-description/bot-description.component";
 import {Bot} from "../../model/bot.model";
+import {SignupComponent} from "../../view/signup/signup.component";
+import {SigninComponent} from "../../view/signin/signin.component";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,20 @@ export class NavigationService {
 
   loadBack() {
     this.navigationEvents.emit('back')
+  }
+
+  loadSignUp() {
+    this.navigationEvents.emit(new NavigationEventModel(
+      SignupComponent,
+      undefined
+    ))
+  }
+
+  loadSignIn() {
+    this.navigationEvents.emit(new NavigationEventModel(
+      SigninComponent,
+      undefined
+    ))
   }
 
   loadStrategiesList() {

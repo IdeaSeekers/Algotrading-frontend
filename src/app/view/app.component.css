@@ -19,10 +19,17 @@ button.back:active {
   color: #819ba9;
 }
 
-button.bot-list {
+div.menu {
   position: fixed;
-  left: 12px;
-  top: 12px;
+  left: 0;
+  top: 0;
+  padding-left: 12px;
+  padding-top: 12px;
+}
+
+.menu > button {
+  display: block;
+  margin-bottom: 24px;
 }
 
 /* Chrome, Safari, Edge, Opera */

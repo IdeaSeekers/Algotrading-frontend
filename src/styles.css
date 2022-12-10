@@ -39,6 +39,10 @@ button.primary:active {
   padding-top: 3px;
 }
 
+button.primary:disabled {
+  background-color: var(--secondary-color);
+}
+
 button.secondary {
   background-color: var(--secondary-color);
   border: none;
