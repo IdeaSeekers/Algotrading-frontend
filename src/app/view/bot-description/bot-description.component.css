@@ -57,3 +57,10 @@ return-chart {
   left: -36px;
   width: 100%;
 }
+
+parameters-table {
+  position: relative;
+  top: 72px;
+  left: -36px;
+  width: 100%;
+}

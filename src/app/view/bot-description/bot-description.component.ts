@@ -5,6 +5,7 @@ import {BotStatus} from "../../model/bot-status.model";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
 import {map} from "rxjs";
 import {NavigationService} from "../../control/services/navigation.service";
+import {Parameter} from "../../model/parameter.model";
 import {BotsService} from "../../control/services/bots.service";
 
 @Component({
@@ -19,9 +20,14 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('chart') chart!: ReturnChartComponent
 
   isInitialised: boolean = false
+  parameters: Parameter[] = []
 
   ngAfterViewInit() {
     this.isInitialised = true
+    this.parameters = [
+      {id: 0, name: "Test par 1", description: "Test description", value: 1},
+      {id: 1, name: "Test par 2", description: "Test description", value: 2},
+    ]
     this.cdr.detectChanges()
     this.chart.updateChartData(
       this.botsService

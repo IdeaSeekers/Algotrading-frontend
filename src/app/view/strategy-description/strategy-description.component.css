@@ -44,13 +44,15 @@ h2 {
   padding-top: 36px;
 }
 
-#strategy-description-field {
-  padding-bottom: 20%;
-}
-
 return-chart {
   position: relative;
   top: 36px;
+  left: -36px;
+  width: 100%;
+}
+
+parameters-table {
+  position: relative;
   left: -36px;
   width: 100%;
 }

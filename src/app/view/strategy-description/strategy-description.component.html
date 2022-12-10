@@ -25,6 +25,10 @@
 
   <h2>Description</h2>
   <p id="strategy-description-field">{{strategy.description}}</p>
+
+  <h2>Parameters</h2>
+  <parameters-table *ngIf="isInitialised" [parameters]="parameters" [showValues]="false"></parameters-table>
+
 </div>
 
 <bot-creation-form
