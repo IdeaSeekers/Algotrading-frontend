@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Strategy} from "../../model/strategy.model";
 import {User} from "../../model/user.model";
 import {BackendService} from "../../control/services/backend.service";
