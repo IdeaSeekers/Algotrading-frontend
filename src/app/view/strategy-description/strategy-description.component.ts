@@ -5,7 +5,6 @@ import {StrategyRisk} from "../../model/strategy-risk.model";
 import {BotCreationFormComponent} from "../bot-creation-form/bot-creation-form.component";
 import {ReturnChartComponent} from "../return-chart/return-chart.component";
 import {map} from "rxjs";
-import {Parameter} from "../../model/parameter.model";
 import {StrategyService} from "../../control/services/strategy.service";
 import {UserService} from "../../control/services/user.service";
 
@@ -28,11 +27,10 @@ export class StrategyDescriptionComponent implements OnInit, AfterViewInit, OnDe
 
   showForm: boolean = false
   isInitialised: boolean = false
-  parameters: Parameter[] = []
 
   ngAfterViewInit() {
     this.isInitialised = true
-    this.parameters = [
+    this.strategy.parameters = [
       { id: 0, name: "Test par 1", description: "Test description", value: undefined },
       { id: 1, name: "Test par 2", description: "Test description", value: undefined },
     ]
