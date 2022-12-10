@@ -27,6 +27,11 @@ div.menu {
   padding-top: 12px;
 }
 
+.menu > button {
+  display: block;
+  margin-bottom: 24px;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

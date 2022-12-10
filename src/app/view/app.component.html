@@ -4,5 +4,6 @@
   <div class="menu">
     <button *ngIf="!isBotList && isAuthorized" class="primary" (click)="navigateBotList()">Bot list</button>
     <button *ngIf="!isSignUp && !isAuthorized" class="primary" (click)="navigateSignUp()">Sign Up</button>
+    <button *ngIf="!isSignIn && !isAuthorized" class="primary" (click)="navigateSignIn()">Sign In</button>
   </div>
 </div>

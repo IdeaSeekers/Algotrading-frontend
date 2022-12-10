@@ -5,6 +5,7 @@ import {NavigationEventModel} from "../model/navigation-event.model";
 import {BotListComponent} from "./bot-list/bot-list.component";
 import {SignupComponent} from "./signup/signup.component";
 import {UserService} from "../control/services/user.service";
+import {SigninComponent} from "./signin/signin.component";
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
 
   isBotList: boolean = false
   isSignUp: boolean = false
+  isSignIn: boolean = false
 
   get isAuthorized(): boolean {
     return this.userService.isAuthorized()
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit {
   private viewComponent(event: NavigationEventModel) {
     this.isBotList = event.component == BotListComponent
     this.isSignUp = event.component == SignupComponent
-    // this.isSignIn
+    this.isSignIn = event.component == SigninComponent
 
     const viewContainerRef = this.viewHost.viewContainerRef
     viewContainerRef.clear()
@@ -56,6 +58,10 @@ export class AppComponent implements OnInit {
 
   navigateSignUp() {
     this.navigation.loadSignUp()
+  }
+
+  navigateSignIn() {
+    this.navigation.loadSignIn()
   }
 
   ngOnInit(): void {

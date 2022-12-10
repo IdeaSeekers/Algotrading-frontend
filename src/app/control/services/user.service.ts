@@ -30,7 +30,12 @@ interface GetAmount {
 })
 export class UserService implements HttpInterceptor {
 
+  private user: User | undefined
   private jwt_token: string | undefined
+
+  getUser(): User | undefined {
+    return this.user
+  }
 
   constructor(private backend: BackendService) {
   }
@@ -71,6 +76,7 @@ export class UserService implements HttpInterceptor {
       result.tinkoff_token = value.tinkoff
 
       this.jwt_token = value.jwt
+      this.user = result
 
       return result
     }))
@@ -105,6 +111,7 @@ export class UserService implements HttpInterceptor {
           if (err instanceof HttpErrorResponse) {
             if (err.status == 401) {
               this.jwt_token = undefined
+              this.user = undefined
             }
           }
           throw err
