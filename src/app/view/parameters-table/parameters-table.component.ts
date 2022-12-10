@@ -1,8 +1,9 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, ViewEncapsulation} from "@angular/core";
 import {Parameter} from "../../model/parameter.model";
 
 @Component({
   selector: 'parameters-table',
+  encapsulation: ViewEncapsulation.ShadowDom,
   template: `
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/w3-css/4.1.0/w3.min.css'
           integrity='sha512-Z6UIAdEZ7JNzeX5M/c5QZj+oqbldGD+E8xJEoOwAx5e0phH7kdjsWULGeK5l2UjehKtChHDaUY2rQAF/NEiI9w=='
