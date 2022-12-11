@@ -24,14 +24,42 @@ interface GetAmount {
   amount: number
 }
 
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private userService: UserService) {
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let token = this.userService.jwt_token
+    if (token) {
+      let cloned = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`)
+      })
+      return next.handle(cloned).pipe(
+        catchError(err => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status == 401) {
+              this.userService.jwt_token = undefined
+              this.userService.user = undefined
+            }
+          }
+          throw err
+        })
+      )
+    } else {
+      return next.handle(req)
+    }
+  }
+}
+
 @Injectable({
   providedIn: 'root',
-
 })
-export class UserService implements HttpInterceptor {
+export class UserService {
 
-  private user: User | undefined
-  private jwt_token: string | undefined
+  user: User | undefined
+  jwt_token: string | undefined
 
   getUser(): User | undefined {
     return this.user
@@ -50,7 +78,7 @@ export class UserService implements HttpInterceptor {
         subscriber.complete()
       })
     } else {
-      return this.backend.http.post(`${this.backend.apiUrl}/signup`, args)
+      return this.backend.http.post(`${this.backend.apiUrl}/user/signup`, args)
     }
   }
 
@@ -68,8 +96,9 @@ export class UserService implements HttpInterceptor {
         subscriber.complete()
       })
     } else {
-      target = this.backend.http.post<SignIn>(`${this.backend.apiUrl}/signin`, args)
+      target = this.backend.http.post<SignIn>(`${this.backend.apiUrl}/user/signin`, args)
     }
+
     return target.pipe(map(value => {
       let result = new User()
       result.username = args.username
@@ -98,28 +127,6 @@ export class UserService implements HttpInterceptor {
       target = this.backend.http.get<GetAmount>(`${this.backend.apiUrl}/user/amount`)
     }
     return target.pipe(map(value => value.amount))
-  }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let token = this.jwt_token
-    if (token) {
-      let cloned = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`)
-      })
-      return next.handle(cloned).pipe(
-        catchError(err => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status == 401) {
-              this.jwt_token = undefined
-              this.user = undefined
-            }
-          }
-          throw err
-        })
-      )
-    } else {
-      return next.handle(req)
-    }
   }
 
 }
