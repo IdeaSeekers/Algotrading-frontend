@@ -32,8 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = this.userService.jwt_token
-    console.log(req.url)
-    if (req.url == this.backend.apiUrl && token) {
+    if (req.url.startsWith(this.backend.apiUrl) && token) {
       let cloned = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)
       })

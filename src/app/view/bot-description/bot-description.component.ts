@@ -6,6 +6,7 @@ import {ReturnChartComponent} from "../return-chart/return-chart.component";
 import {map} from "rxjs";
 import {NavigationService} from "../../control/services/navigation.service";
 import {BotsService} from "../../control/services/bots.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'bot-description',
@@ -35,9 +36,31 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
           })
         ))
     )
+    this.interval = setInterval(() => {
+      this.botsService.getBotById({id: this.bot.id}).subscribe(bot => {
+        if (environment.mockBackend) {
+          bot.currentBalance *= Math.random() * 2
+        }
+        this.bot.status = bot.status
+        this.bot.currentBalance = bot.currentBalance
+      })
+      this.chart.updateChartData(
+        this.botsService
+          .getBotOperationsHistory({id: this.bot.id})
+          .pipe(map(value =>
+            value.operations.map(item => {
+              return {
+                timestamp: item.timestamp,
+                value: item.return
+              }
+            })
+          ))
+      )
+    }, 2000)
   }
 
   private readonly oldTitle: string
+  private interval: NodeJS.Timer | undefined
 
   constructor(
     private titleService: Title,
@@ -60,6 +83,7 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    clearInterval(this.interval)
     this.titleService.setTitle(this.oldTitle)
   }
 }

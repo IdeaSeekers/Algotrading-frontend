@@ -44,6 +44,7 @@ export class BotCreationFormComponent implements OnInit {
   sendRequestProvider: () => void
 
   private sendRequest() {
+    console.log(this.botCreationForm.value.security.length)
     this.botsService.createBot({
       name: this.botCreationForm.value.botName!,
       strategy: {

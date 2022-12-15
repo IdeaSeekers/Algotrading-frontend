@@ -21,7 +21,7 @@ Accessibility(Highcharts)
   styles: [`
     #chart-container {
       width: inherit;
-      height: inherit;
+        height: inherit;
     }
     highcharts-chart {
       width: 100%;
@@ -164,7 +164,8 @@ export class ReturnChartComponent {
       opposite: false
     },
     tooltip: {
-      split: false
+      split: false,
+      valueDecimals: 2
     },
     plotOptions: {
       area: {
@@ -184,7 +185,6 @@ export class ReturnChartComponent {
     },
     series: [{
       type: 'area',
-      pointInterval: 24 * 3600 * 1000,
       name: 'Income'
     }]
   };
