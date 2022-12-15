@@ -61,10 +61,7 @@ export class AppComponent implements OnInit {
       this.viewComponent(event)
     })
 
-    if (this.isAuthorized)
-      this.navigation.loadStrategiesList()
-    else
-      this.navigateSignIn()
+    this.navigation.loadStrategiesList()
 
     let nav = document.querySelector(".nav-container");
 

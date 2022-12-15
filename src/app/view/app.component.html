@@ -3,7 +3,7 @@
     <div class="nav-toggle"></div>
     <nav class="nav-items">
       <img src="./assets/logo.png">
-      <a class="nav-item" *ngIf="isAuthorized" (click)="navigateStrategyList()">Strategies list</a>
+      <a class="nav-item" (click)="navigateStrategyList()">Strategies list</a>
       <a class="nav-item" *ngIf="isAuthorized" (click)="navigateBotList()">Bots list</a>
       <a class="nav-item" *ngIf="!isAuthorized" (click)="navigateSignIn()">Sign in</a>
       <a class="nav-item" *ngIf="!isAuthorized" (click)="navigateSignUp()">Sign up</a>
