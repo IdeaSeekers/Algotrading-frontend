@@ -33,7 +33,7 @@ h1 {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 550px;
-  height: 250px;
+  height: 300px;
   background-color: var(--box-bg-color);
   padding: 24px 24px;
   border-radius: 15px;
@@ -61,6 +61,17 @@ h1 {
   color: #819ba9;
 }
 
+.form-group {
+  clear: both;
+  text-align: right;
+  line-height: 30px;
+}
+
+.form-group > label {
+  float: left;
+  padding-right: 10px;
+}
+
 .form_content {
   position: absolute;
   top: 50%;
@@ -74,7 +85,7 @@ h1 {
   transform: translate(-24px, -24px);
 }
 
-input {
+.input {
   border: none;
   height: 32px;
   border-radius: 5px;
@@ -82,7 +93,7 @@ input {
   font-size: 20px;
 }
 
-input:focus {
+.input:focus {
   outline-width: 0;
 }
 

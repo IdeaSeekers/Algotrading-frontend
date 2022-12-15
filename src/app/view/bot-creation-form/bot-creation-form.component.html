@@ -8,13 +8,22 @@
     <div class="form-inline form_content">
       <div class="form-group">
         <label for="bot_name" class="text_primary">Bot Name: </label>
-        <input type="text" id="bot_name" name="bot_name" size="30" formControlName="botName">
+        <input class="input" type="text" id="bot_name" name="bot_name" size="30" formControlName="botName">
+      </div>
+      <div class="form-group">
+        <label for="security" class="text_primary">Security: </label>
+        <select class="form-control input" id="security" name="security" formControlName="security">
+          <option *ngFor="let security of parameterService.securities.securities" [value]="security">{{security.name}}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="amount" class="text_primary">Input Amount: </label>
-        <input type="number" min="0.0001" max="1000000000" id="amount" name="amount" class="input_number" formControlName="inputAmount">
+        <input type="number" min="0.0001" max="1000000000" id="amount" name="amount" class="input_number input" formControlName="inputAmount">
         <span class="text_primary"> ₽</span>
         <span class="text_secondary">&emsp;({{user.balance}}₽ available)</span>
+      </div>
+      <div class="form-group">
+
       </div>
       <div class="form-group">
         <input type="checkbox" id="terms_cb" name="terms_cb" class="custom-checkbox" formControlName="terms">

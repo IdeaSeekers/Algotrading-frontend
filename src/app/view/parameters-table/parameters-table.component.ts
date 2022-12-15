@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
 import {Parameter} from "../../model/parameter.model";
+import {ParametersService} from "../../control/services/parameters.service";
 
 @Component({
   selector: 'parameters-table',
@@ -64,7 +65,7 @@ export class ParametersTableComponent implements OnInit {
   allHeaders: ITableHeader[] = [];
   tableData: IDynamicTable = {headers: [], data: []};
 
-  public constructor() {
+  public constructor(private parametersService: ParametersService) {
     if (this.parameters == undefined)
       this.parameters = [];
     if (this.showValues == undefined)
@@ -94,10 +95,16 @@ export class ParametersTableComponent implements OnInit {
   private getData(): { [name: string]: number | undefined }[] {
     let data: {}[] = [];
     for (let p of this.parameters!!) {
+      let value
+      if (p.id == 0) {
+        value = this.parametersService.securities.securities.find(x => x.id == p.value)?.name
+      } else {
+        value = p.value
+      }
       data.push({
         "Name": p.name,
         "Description": p.description,
-        "Value": p.value,
+        "Value": value,
       });
     }
     return data;

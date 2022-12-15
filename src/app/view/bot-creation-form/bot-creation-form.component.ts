@@ -4,6 +4,7 @@ import {Strategy} from "../../model/strategy.model";
 import {User} from "../../model/user.model";
 import {UserService} from "../../control/services/user.service";
 import {BotsService} from "../../control/services/bots.service";
+import {ParametersService} from "../../control/services/parameters.service";
 
 @Component({
   selector: 'bot-creation-form',
@@ -25,12 +26,18 @@ export class BotCreationFormComponent implements OnInit {
     this.user = this.userService.getUser()!
     this.botCreationForm = this.fb.group({
       botName: ['', Validators.required],
+      security: [null, Validators.required],
       inputAmount: [0, [Validators.min(10), Validators.max(this.user.balance)]],
       terms: [false, Validators.requiredTrue],
     })
   }
 
-  constructor(private fb: FormBuilder, private botsService: BotsService, private userService: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private botsService: BotsService,
+    private userService: UserService,
+    public parameterService: ParametersService
+  ) {
     this.sendRequestProvider = this.sendRequest.bind(this)
   }
 
@@ -45,17 +52,18 @@ export class BotCreationFormComponent implements OnInit {
       parameters: [
         {
           id: 0,
-          value: 0
+          value: this.botCreationForm.value.security!.id
         },
         {
           id: 1,
           value: this.botCreationForm.value.inputAmount!
         }
       ]
-    }).subscribe()
-    if (this.onSendRequest) {
-      this.onSendRequest()
-    }
+    }).subscribe().add(() => {
+      if (this.onSendRequest) {
+        this.onSendRequest()
+      }
+    })
   }
 
 }

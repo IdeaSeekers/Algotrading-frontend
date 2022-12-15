@@ -23,7 +23,12 @@ interface Securities {
 })
 export class ParametersService {
 
+  securities!: Securities
+
   constructor(private backend: BackendService) {
+    this.getSecurities().subscribe(value => {
+      this.securities = value
+    })
   }
 
   getParameterById(args: { id: number }): Observable<Parameter> {
