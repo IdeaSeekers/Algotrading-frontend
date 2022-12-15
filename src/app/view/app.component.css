@@ -1,24 +1,3 @@
-button.back {
-  position: fixed;
-  right: 0;
-  top: 0;
-  transform: translate(-30px, 12px);
-  font-size: 60px;
-  padding: 0 0;
-  line-height: 40px;
-  border: none;
-  background-color: transparent;
-  color: var(--secondary-color);
-}
-
-button.back:hover {
-  color: #72acff;
-}
-
-button.back:active {
-  color: #819ba9;
-}
-
 div.menu {
   position: fixed;
   left: 0;

@@ -27,12 +27,13 @@ interface GetAmount {
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private backend: BackendService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = this.userService.jwt_token
-    if (token) {
+    console.log(req.url)
+    if (req.url == this.backend.apiUrl && token) {
       let cloned = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)
       })
@@ -62,6 +63,9 @@ export class UserService {
   jwt_token: string | undefined
 
   getUser(): User | undefined {
+    if (this.user) {
+      this.getAmount().subscribe(amount => this.user!.balance = amount)
+    }
     return this.user
   }
 

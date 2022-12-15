@@ -56,8 +56,7 @@ export class BotDescriptionComponent implements AfterViewInit, OnDestroy {
   }
 
   stopBot() {
-    this.botsService.stopBot({id: this.bot.id}).subscribe()
-    this.navigation.loadBack()
+    this.botsService.stopBot({id: this.bot.id}).subscribe().add(() => this.navigation.loadBotsList())
   }
 
   ngOnDestroy() {

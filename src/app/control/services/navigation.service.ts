@@ -14,11 +14,7 @@ import {SigninComponent} from "../../view/signin/signin.component";
 })
 export class NavigationService {
 
-  navigationEvents = new EventEmitter<NavigationEventModel | 'back'>(true)
-
-  loadBack() {
-    this.navigationEvents.emit('back')
-  }
+  navigationEvents = new EventEmitter<NavigationEventModel>(true)
 
   loadSignUp() {
     this.navigationEvents.emit(new NavigationEventModel(

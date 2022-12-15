@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Strategy} from "../../model/strategy.model";
 import {User} from "../../model/user.model";
 import {UserService} from "../../control/services/user.service";
@@ -19,14 +19,15 @@ export class BotCreationFormComponent implements OnInit {
   @ViewChild('close_button') closeButton!: ElementRef<HTMLButtonElement>
   @ViewChild('start_button') startButton!: ElementRef<HTMLButtonElement>
 
-  botCreationForm = this.fb.group({
-    botName: ['', Validators.required],
-    inputAmount: [0, [Validators.min(10), Validators.max(1000000)]],
-    terms: [false, Validators.requiredTrue],
-  })
+  botCreationForm!: FormGroup
 
   ngOnInit() {
     this.user = this.userService.getUser()!
+    this.botCreationForm = this.fb.group({
+      botName: ['', Validators.required],
+      inputAmount: [0, [Validators.min(10), Validators.max(this.user.balance)]],
+      terms: [false, Validators.requiredTrue],
+    })
   }
 
   constructor(private fb: FormBuilder, private botsService: BotsService, private userService: UserService) {

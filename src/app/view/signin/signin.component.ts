@@ -25,7 +25,7 @@ export class SigninComponent {
     this.userService.signIn({
       username: this.username,
       password: this.password
-    }).subscribe(() => this.navigationService.loadBack())
+    }).subscribe().add(() => this.navigationService.loadStrategiesList())
   }
 
 }

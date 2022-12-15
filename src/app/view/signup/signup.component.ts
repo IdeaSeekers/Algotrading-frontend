@@ -27,8 +27,7 @@ export class SignupComponent {
       username: this.username,
       password: this.password,
       tinkoff: this.tinkoff
-    }).subscribe()
-    this.navigationService.loadBack()
+    }).subscribe().add(() => this.navigationService.loadSignIn())
   }
 
 }

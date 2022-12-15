@@ -6,6 +6,7 @@ $toggleColor: #B7D4FF;
 .nav-container {
   position: sticky;
   top: 0;
+  z-index: 5;
   display: inline-block;
   max-width: $toggleSize + $toggleMargin;
   max-height: $toggleSize + $toggleMargin;

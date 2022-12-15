@@ -19,12 +19,6 @@ export class AppComponent implements OnInit {
   constructor(private navigation: NavigationService, private userService: UserService) {
   }
 
-  private historyViews: Array<NavigationEventModel> = []
-
-  get hasPrevious(): boolean {
-    return this.historyViews.length > 1
-  }
-
   isBotList: boolean = false
   isSignUp: boolean = false
   isSignIn: boolean = false
@@ -32,12 +26,6 @@ export class AppComponent implements OnInit {
   get isAuthorized(): boolean {
     return this.userService.isAuthorized()
   }
-
-  back() {
-    this.historyViews.pop()
-    this.viewComponent(this.historyViews[this.historyViews.length - 1])
-  }
-
   private viewComponent(event: NavigationEventModel) {
     this.isBotList = event.component == BotListComponent
     this.isSignUp = event.component == SignupComponent
@@ -70,12 +58,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.navigation.navigationEvents.subscribe(event => {
-      if (event == 'back') {
-        this.back()
-      } else {
-        this.historyViews.push(event)
-        this.viewComponent(event)
-      }
+      this.viewComponent(event)
     })
 
     if (this.isAuthorized)
