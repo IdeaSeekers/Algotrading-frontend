@@ -10,7 +10,7 @@ import {SigninComponent} from "./signin/signin.component";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css', 'nav-bar.component.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -52,6 +52,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  navigateStrategyList() {
+    this.navigation.loadStrategiesList()
+  }
+
   navigateBotList() {
     this.navigation.loadBotsList()
   }
@@ -74,7 +78,30 @@ export class AppComponent implements OnInit {
       }
     })
 
-    this.navigation.loadStrategiesList()
+    if (this.isAuthorized)
+      this.navigation.loadStrategiesList()
+    else
+      this.navigateSignIn()
+
+    let nav = document.querySelector(".nav-container");
+
+    if (nav != null) {
+      let toggle = nav.querySelector(".nav-toggle");
+
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          if (nav!!.classList.contains("is-active")) {
+            nav!!.classList.remove("is-active");
+          } else {
+            nav!!.classList.add("is-active");
+          }
+        });
+
+        nav.addEventListener("blur", () => {
+          nav!!.classList.remove("is-active");
+        });
+      }
+    }
   }
 
 }
